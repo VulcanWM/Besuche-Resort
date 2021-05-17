@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/0.7.1/aframe.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+		<script src="https://unpkg.com/super-hands@3.0.0/dist/super-hands.min.js"></script>
+	<script src="{{ url_for('static', filename='beach.js') }}"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%7CRoboto+Mono" media="all" /></head>
+  <body class="a-body ">
+    <a-scene class="fullscreen" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" cursor="rayOrigin: mouse">
+			<canvas class="a-canvas" data-aframe-canvas="true" width="300" height="150"></canvas>
+			<a-assets>
+				<a-asset-item id="island-obj" src="{{ url_for('static', filename='island.obj') }}"></a-asset-item>
+    		<a-asset-item id="island-mtl" src="{{ url_for('static', filename='island.mtl') }}"></a-asset-item>
+				<a-asset-item id="tree-obj" src="{{ url_for('static', filename='untitled.obj') }}"></a-asset-item>
+				<a-asset-item id="tree-mtl" src="{{ url_for('static', filename='untitled.mtl') }}"></a-asset-item>
+        <img id="homeThumbnail" src="{{ url_for('static', filename='home.png') }}">
+			</a-assets>
+      <a-image id="clickable" src="#homeThumbnail" position="0 2 0" rotation="-90 0 0"></a-image>
+      <script>
+        document.getElementById("clickable").addEventListener("click", function(e) {
+          window.location.replace("https://Resort.vulcanwm.repl.co");
+        });
+      </script>>
+			<a-camera position="0 -1 0" wasd-controls="fly: true"></a-camera>
+			<a-ocean color="#060660" depth="100" width="100" density="25" ocean="opacity:0.8;color:#060660"></a-ocean>
+      <a-sky color="#adf" material="" geometry=""></a-sky>
+    	<a-entity position="3.818 0 -2.385" rotation="-78.89628838951435 0 0" geometry="radius:0.67;radiusTubular:0.1;primitive:torus" material="color:#00ff00" floatie id="floatie"></a-entity>
+			<a-entity obj-model="obj: #island-obj; mtl: #island-mtl" position="0 0 -1" scale="1 0.4 1"></a-entity>
+    	<a-entity obj-model="obj: #tree-obj; mtl: #tree-mtl" position="-1 0 -2" scale="1.5 2 1.5"></a-entity>
+			<a-sphere  src="{{ url_for('static', filename='BeachBallColor.jpg') }}" position="-0.3 0.7 -2" scale="0.3 0.3 0.3" rotation="0 75 0" grabbable></a-sphere>
+
+			<a-entity sphere-collider="objects: a-box" super-hands hand-controls="left"></a-entity>
+      <a-entity sphere-collider="objects: a-box" super-hands hand-controls="right"></a-entity>
+		</a-scene>
+</body></html>
