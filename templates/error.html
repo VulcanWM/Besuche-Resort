@@ -1,0 +1,15 @@
+<html>
+  <body >
+    <link href="{{ url_for('static', filename='expand.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='error.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <center>
+      <title>Besuche Resort Error</title>
+      <p class="error">{{error}}</p>
+      <br>
+      <p>Click <a href="/">here</a> to go back to the main page</p>
+    </center>
+    <script src="/static/expand.js"></script>
+  </body>

@@ -1,0 +1,24 @@
+div.expandable{
+	transition:background-color 0.3s;
+	cursor:pointer;
+}
+
+div.expandable:hover,div.expandable.selected:not(.no-darken){
+	background-color:var(--main-bg-color);
+}
+
+div.expandable.selected.no-darken{
+  background-color:var(--alt-bg-color);
+}
+
+div.expandable>div.expand{
+	height:0;
+	transition:height 1s;
+	overflow:hidden;
+}
+
+div.expandable.selected>div.expand{
+	height:var(--max-height);
+  cursor:auto;
+}
+

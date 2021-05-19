@@ -1,9 +1,12 @@
+<title>Besuche Resort Beach</title>
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/0.7.1/aframe.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
 		<script src="https://unpkg.com/super-hands@3.0.0/dist/super-hands.min.js"></script>
-	<script src="{{ url_for('static', filename='beach.js') }}"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%7CRoboto+Mono" media="all" /></head>
+
   <body class="a-body ">
     <a-scene class="fullscreen" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" cursor="rayOrigin: mouse">
 			<canvas class="a-canvas" data-aframe-canvas="true" width="300" height="150"></canvas>
@@ -17,7 +20,7 @@
       <a-image id="clickable" src="#homeThumbnail" position="0 2 0" rotation="-90 0 0"></a-image>
       <script>
         document.getElementById("clickable").addEventListener("click", function(e) {
-          window.location.replace("https://Namaste.vulcanwm.repl.co");
+          window.location.replace("https://Besuche-Resort.vulcanwm.repl.co");
         });
       </script>>
 			<a-camera position="0 -1 0" wasd-controls="fly: true"></a-camera>
@@ -31,4 +34,5 @@
 			<a-entity sphere-collider="objects: a-box" super-hands hand-controls="left"></a-entity>
       <a-entity sphere-collider="objects: a-box" super-hands hand-controls="right"></a-entity>
 		</a-scene>
+	  <script src="{{ url_for('static', filename='beach.js') }}"></script>
 </body></html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Besuche Resort</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='expand.css') }}" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+        <div class="auth">
+        <div class="expandable section auth-box">
+          <h2>Signup</h2>
+          <div class="expand">
+            <div class="login-form-body">
+              <div class="login-form-heading">
+                <br>
+              </div>
+              <div class="login-form-form">
+                <form method="POST" action="{{ url_for('signup') }}">
+                  <input class="login-form-input" placeholder="username" name="username">
+                  <input class="login-form-input" placeholder="password" type="password" name="password">
+                  <input class="login-form-input" placeholder="confirm password" type="password" name="passwordagain"><br>
+                  <button class="login-form-button">signup</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="expandable section auth-box">
+          <h2>Login</h2>
+          <div class="expand">
+            <div class="login-form-body">
+              <div class="login-form-heading">
+                <br>
+              </div>
+              <div class="login-form-form">
+                <form method="POST" action="../login">
+                  <input class="login-form-input" placeholder="username" name="username">
+                  <input class="login-form-input" placeholder="password" type="password" name="password"><br>
+                  <button class="login-form-button">login</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="{{ url_for('static', filename='expand.js') }}"></script>
+  </body>
+</html>
