@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
 usersdb = mainclient.Users
 profilescol = usersdb.Users
+
 def addcookie(key, value):
   session[key] = value
 
