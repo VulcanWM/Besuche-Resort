@@ -1,0 +1,25 @@
+<html>
+  <body>
+    <link href="{{ url_for('static', filename='expand.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <center>
+      <title>Besuche Resort Cafe</title>
+    </center>
+    <h1>Besuche Resort Cafe</h1>
+    <h2>Menu</h2>
+    {% for item in items %}
+      <div class="expandable section auth-box">
+        <h3>Item name: {{item['Item']}}</p>
+        <div class="expand">
+          <p>Price: {{item['Cost']}}</p>
+          <p>Amount of XP you gain: {{item['XP']}}</p>
+          <a href="/buycafeitem/{{item['Item']}}">Buy {{item['Item']}}</a>
+          <br>
+          <br>
+        </div>
+      </div>
+    {% endfor %}
+    <script src="{{ url_for('static', filename='expand.js') }}"></script>
+  </body>

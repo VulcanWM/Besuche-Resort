@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, render_template, request, redirect
+import json
 import os
-from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, delcookie
+from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, delcookie, buycafeitem, getitem
 from werkzeug.security import check_password_hash
 app = Flask(__name__,
             static_url_path='', 
@@ -51,6 +52,27 @@ def beach():
     return render_template("login.html")
   else:
     return render_template("beach.html")
+
+@app.route("/cafe")
+def cafe():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  with open('cafe.json') as json_file:
+    data = json.load(json_file)
+  json_file.close()
+  return render_template("cafe.html", items=data)
+
+@app.route("/buycafeitem/<item>")
+def buycafeitemfunc(item):
+  if getcookie("User") == False:
+    return render_template("login.html")
+  func = buycafeitem(getcookie("User"), item)
+  if func == True:
+    money = str(getitem(item, "cafe")['Cost'])
+    xp = str(getitem(item, "cafe")['XP'])
+    return f"You bought {item} with ₹{money}, ate it and gained {xp} XP!"
+  else:
+    return render_template("error.html", error=func)
 
 @app.route("/logout")
 def logout():

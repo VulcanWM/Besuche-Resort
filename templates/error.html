@@ -1,5 +1,5 @@
 <html>
-  <body >
+  <body>
     <link href="{{ url_for('static', filename='expand.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url_for('static', filename='error.css') }}" rel="stylesheet" type="text/css" />
@@ -11,5 +11,5 @@
       <br>
       <p>Click <a href="/">here</a> to go back to the main page</p>
     </center>
-    <script src="/static/expand.js"></script>
+    <script src="{{ url_for('static', filename='expand.js') }}"></script>= 
   </body>
