@@ -1,0 +1,62 @@
+[
+  {
+    "Item": "Vanilla Ice Cream",
+    "XP": 1000,
+    "Cost": 1100
+  },
+  {
+    "Item": "Chocolate Ice Cream",
+    "XP": 1000,
+    "Cost": 1100
+  },
+  {
+    "Item": "Mint Chocolate Chip Ice Cream",
+    "XP": 1000,
+    "Cost": 1100
+  },
+  {
+    "Item": "Strawberry Ice Cream",
+    "XP": 1000,
+    "Cost": 1100
+  },
+  {
+    "Item": "Mango Kulfi",
+    "XP": 500,
+    "Cost": 550
+  },
+  {
+    "Item": "Banana Smoothie",
+    "XP": 500,
+    "Cost": 550
+  },
+  {
+    "Item": "Berry Smoothie",
+    "XP": 500,
+    "Cost": 550
+  },
+  {
+    "Item": "Tropical Smoothie",
+    "XP": 500,
+    "Cost": 550
+  },
+  {
+    "Item": "Chocolate Milkshake",
+    "XP": 600,
+    "Cost": 660
+  },
+  {
+    "Item": "Vanilla Milkshake",
+    "XP": 600,
+    "Cost": 660
+  },
+  {
+    "Item": "Oreo Milkshake",
+    "XP": 600,
+    "Cost": 660
+  },
+  {
+    "Item": "Caramel Milkshake",
+    "XP": 600,
+    "Cost": 660
+  }
+]

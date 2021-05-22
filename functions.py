@@ -54,7 +54,7 @@ def allusers():
   return users
 
 def getitem(item, type):
-  with open(f'{type}.json') as json_file:
+  with open(f'items/{type}.json') as json_file:
     data = json.load(json_file)
   json_file.close()
   for itemname in data:
@@ -67,6 +67,42 @@ def buycafeitem(username, item):
   money = user2['Money']
   xp = user2['XP']
   itemstats = getitem(item, "cafe")
+  if int(user['Money']) < int(itemstats['Cost']):
+    return "You don't have enough money!"
+  money = int(money) - itemstats['Cost']
+  xp = int(xp) + itemstats['XP']
+  del user2['Money']
+  del user2['XP']
+  user2['Money'] = money
+  user2['XP'] = xp
+  profilescol.delete_one({"Username": username})
+  profilescol.insert_many([user2])
+  return True
+
+def buyrestaurantitem(username, item):
+  user = getuser(username)
+  user2 = user
+  money = user2['Money']
+  xp = user2['XP']
+  itemstats = getitem(item, "restaurant")
+  if int(user['Money']) < int(itemstats['Cost']):
+    return "You don't have enough money!"
+  money = int(money) - itemstats['Cost']
+  xp = int(xp) + itemstats['XP']
+  del user2['Money']
+  del user2['XP']
+  user2['Money'] = money
+  user2['XP'] = xp
+  profilescol.delete_one({"Username": username})
+  profilescol.insert_many([user2])
+  return True
+
+def buybaritem(username, item):
+  user = getuser(username)
+  user2 = user
+  money = user2['Money']
+  xp = user2['XP']
+  itemstats = getitem(item, "bar")
   if int(user['Money']) < int(itemstats['Cost']):
     return "You don't have enough money!"
   money = int(money) - itemstats['Cost']

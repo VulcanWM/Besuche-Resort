@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 import json
 import os
-from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, delcookie, buycafeitem, getitem
+from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, delcookie, buycafeitem, getitem, buyrestaurantitem, buybaritem
 from werkzeug.security import check_password_hash
 app = Flask(__name__,
             static_url_path='', 
@@ -57,10 +57,10 @@ def beach():
 def cafe():
   if getcookie("User") == False:
     return render_template("login.html")
-  with open('cafe.json') as json_file:
+  with open('items/cafe.json') as json_file:
     data = json.load(json_file)
   json_file.close()
-  return render_template("cafe.html", items=data)
+  return render_template("cafe.html", items=data, cap="Cafe", nocap="cafe")
 
 @app.route("/buycafeitem/<item>")
 def buycafeitemfunc(item):
@@ -74,7 +74,53 @@ def buycafeitemfunc(item):
   else:
     return render_template("error.html", error=func)
 
+@app.route("/restaurant")
+def restaurant():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  with open('items/restaurant.json') as json_file:
+    data = json.load(json_file)
+  json_file.close()
+  return render_template("cafe.html", items=data, cap="Restaurant", nocap="restaurant")
+
+@app.route("/buyrestaurantitem/<item>")
+def buyrestaurantitemfunc(item):
+  if getcookie("User") == False:
+    return render_template("login.html")
+  func = buyrestaurantitem(getcookie("User"), item)
+  if func == True:
+    money = str(getitem(item, "restaurant")['Cost'])
+    xp = str(getitem(item, "restaurant")['XP'])
+    return f"You bought {item} with ₹{money}, ate it and gained {xp} XP!"
+  else:
+    return render_template("error.html", error=func)
+
+@app.route("/bar")
+def bar():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  with open('items/bar.json') as json_file:
+    data = json.load(json_file)
+  json_file.close()
+  return render_template("cafe.html", items=data, cap="Bar", nocap="bar")
+
+@app.route("/buybaritem/<item>")
+def buybaritemfunc(item):
+  if getcookie("User") == False:
+    return render_template("login.html")
+  func = buybaritem(getcookie("User"), item)
+  if func == True:
+    money = str(getitem(item, "bar")['Cost'])
+    xp = str(getitem(item, "bar")['XP'])
+    return f"You bought {item} with ₹{money}, drank it and gained {xp} XP!"
+  else:
+    return render_template("error.html", error=func)
+
 @app.route("/logout")
 def logout():
   delcookie("User")
   return redirect("/")
+
+@app.route("/pool")
+def pool():
+  return render_template("pool.html")

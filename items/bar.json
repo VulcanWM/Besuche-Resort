@@ -1,0 +1,12 @@
+[
+  {
+    "Item": "Apple Juice",
+    "XP": 5000,
+    "Cost": 5500
+  },
+  {
+    "Item": "Vodka",
+    "XP": 7500,
+    "Cost": 8250
+  }
+]
