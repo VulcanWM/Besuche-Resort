@@ -1,0 +1,30 @@
+body {
+  text-align: center;
+  padding: 40px 0;
+  background: #171D2D;
+}
+h1 {
+  color: #81CFF2;
+  font-weight: 900;
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+p {
+  color: #81CFF2;
+  font-size:20px;
+  margin: 0;
+}
+i {
+  color: #81CFF2;
+  font-size: 100px;
+  line-height: 200px;
+  margin-left:-15px;
+}
+.card {
+  background: #2D2816;
+  padding: 60px;
+  border-radius: 4px;
+  /* box-shadow: 0 2px 3px #C8D0D8; */
+  display: inline-block;
+  margin: 0 auto;
+}

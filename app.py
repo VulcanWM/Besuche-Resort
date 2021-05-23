@@ -70,7 +70,7 @@ def buycafeitemfunc(item):
   if func == True:
     money = str(getitem(item, "cafe")['Cost'])
     xp = str(getitem(item, "cafe")['XP'])
-    return f"You bought {item} with ₹{money}, ate it and gained {xp} XP!"
+    return render_template("success.html", success=f"You bought {item} with ₹{money}, ate it and gained {xp} XP!")
   else:
     return render_template("error.html", error=func)
 
@@ -91,7 +91,7 @@ def buyrestaurantitemfunc(item):
   if func == True:
     money = str(getitem(item, "restaurant")['Cost'])
     xp = str(getitem(item, "restaurant")['XP'])
-    return f"You bought {item} with ₹{money}, ate it and gained {xp} XP!"
+    return render_template("success.html", success=f"You bought {item} with ₹{money}, ate it and gained {xp} XP!")
   else:
     return render_template("error.html", error=func)
 
@@ -112,15 +112,11 @@ def buybaritemfunc(item):
   if func == True:
     money = str(getitem(item, "bar")['Cost'])
     xp = str(getitem(item, "bar")['XP'])
-    return f"You bought {item} with ₹{money}, drank it and gained {xp} XP!"
+    return render_template("success.html", success=f"You bought {item} with ₹{money}, drank it and gained {xp} XP!")
   else:
     return render_template("error.html", error=func)
 
-@app.route("/logout")
-def logout():
-  delcookie("User")
-  return redirect("/")
-
-@app.route("/pool")
-def pool():
-  return render_template("pool.html")
+# @app.route("/logout")
+# def logout():
+#   delcookie("User")
+#   return redirect("/")
