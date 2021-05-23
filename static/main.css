@@ -97,10 +97,6 @@ a:hover {
   justify-content: center;
 }
 
-.auth > .auth-box{
-  /* eh forget it */
-}
-
 *{
   transition: 0.4s;
 }

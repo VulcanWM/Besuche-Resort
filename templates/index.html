@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='navbar.css') }}" rel="stylesheet" type="text/css" />
+    <title>Besuche Resort</title>
+  </head>
+    <body>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li class="dropdown">
+          <a href="javascript:void(0)" class="dropbtn">3D Places</a>
+          <div class="dropdown-content">
+            <a href="/beach">Beach</a>
+          </div>
+        </li>
+        <li class="dropdown">
+          <a href="javascript:void(0)" class="dropbtn">Website Places</a>
+          <div class="dropdown-content">
+            <a href="/bar">Bar</a>
+            <a href="/restaurant">Restaurant</a>
+            <a href="/cafe">Cafe</a>
+          </div>
+        </li>
+      </ul>
+    </body>
+</html>

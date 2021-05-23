@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='profile.css') }}" rel="stylesheet" type="text/css" />
+    <title>Besuche Resort - {{user['Username']}}</title>
+  </head>
+    <body>
+      <h2><a href="/">Home</a></h2>
+      <h1>{{user['Username']}}</h1> 
+      <p>Money: ₹{{user['Money']}}</p>
+      <p>XP: {{user['XP']}}</p>
+      {% if user['Items'] == [] %}
+        <p>{{user['Username']}} has no items!</p>
+      {% else %}
+        <h3>Items</h3>
+          {% for itemidk in items  %}
+            {% for item, amount in itemidk.items() %}
+              <p>Item: {{item}}</p>
+              <p>Amount: {{amount}}</p>
+            {% endfor %}
+          {% endfor %}
+      {% endif %}
+    </body>
+</html>

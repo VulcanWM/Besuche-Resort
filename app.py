@@ -14,7 +14,7 @@ def home():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
-    return render_template("main.html")
+    return render_template("index.html")
 
 @app.route("/signup", methods=['POST', 'GET'])
 def signup():
@@ -115,6 +115,14 @@ def buybaritemfunc(item):
     return render_template("success.html", success=f"You bought {item} with ₹{money}, drank it and gained {xp} XP!")
   else:
     return render_template("error.html", error=func)
+
+@app.route("/profile")
+def profile():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  user = getuser(getcookie("User"))
+  items = user['Items']
+  return render_template("profile.html", user=user, items=items)
 
 # @app.route("/logout")
 # def logout():
