@@ -124,6 +124,14 @@ def profile():
   items = user['Items']
   return render_template("profile.html", user=user, items=items)
 
+@app.route("/outdoorpool")
+def outdoorpool():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  else:
+    return render_template("outdoorpool.html")
+  
+
 # @app.route("/logout")
 # def logout():
 #   delcookie("User")

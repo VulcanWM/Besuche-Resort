@@ -28,7 +28,7 @@ def makeaccount(username, password):
   document = [{
     "Username": username,
     "Password": passhash,
-    "Money": 0,
+    "Money": 5000,
     "XP": 0,
     "Items": []
   }]
