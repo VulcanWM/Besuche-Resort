@@ -1,19 +1,16 @@
 <html>
   <body>
     <head>
-      <link href="{{ url_for('static', filename='disco.css') }}" rel="stylesheet" type="text/css" />
       <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
       <link rel="preconnect" href="https://fonts.gstatic.com">
       <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <center>
-      <title>Besuche Hotel Disco</title>
+      <title>Besuche Hotel Cinema</title>
       <h2><a href="/">Home</a></h2>
-      <div id="discoBallLight"></div>
-      <div id="discoBall">
-        <div id="discoBallMiddle"></div>
-      </div>
+      <i class="fa fa-television" style="font-size:500px;color:blue;background:grey"></i>
     </center>
-    <script src="{{ url_for('static', filename='disco.js') }}"></script>
   </body>
 </html>

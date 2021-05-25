@@ -145,6 +145,13 @@ def indoorpool():
   else:
     return render_template("indoorpool.html")
 
+@app.route("/cinema")
+def cinema():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  else:
+    return render_template("cinema.html")
+
 # @app.route("/logout")
 # def logout():
 #   delcookie("User")
