@@ -1,12 +1,12 @@
 [
   {
     "Item": "Apple Juice",
-    "XP": 5000,
+    "XP": 50,
     "Cost": 5500
   },
   {
     "Item": "Vodka",
-    "XP": 7500,
+    "XP": 75,
     "Cost": 8250
   }
 ]

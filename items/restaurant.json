@@ -1,12 +1,12 @@
 [
   {
     "Item": "Chicken Burger",
-    "XP": 10000,
+    "XP": 100,
     "Cost": 11000
   },
   {
     "Item": "Margherita Pizza",
-    "XP": 10000,
+    "XP": 100,
     "Cost": 11000
   }
 ]

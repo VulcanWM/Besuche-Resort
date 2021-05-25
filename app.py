@@ -131,6 +131,12 @@ def outdoorpool():
   else:
     return render_template("outdoorpool.html")
   
+@app.route("/disco")
+def disco():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  else:
+    return render_template("disco.html")
 
 # @app.route("/logout")
 # def logout():

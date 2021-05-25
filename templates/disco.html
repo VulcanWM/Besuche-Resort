@@ -1,0 +1,18 @@
+<html>
+  <body>
+    <head>
+      <link href="{{ url_for('static', filename='disco.css') }}" rel="stylesheet" type="text/css" />
+      <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    </head>
+    <center>
+      <h2><a href="/">Home</a></h2>
+      <div id="discoBallLight"></div>
+      <div id="discoBall">
+        <div id="discoBallMiddle"></div>
+      </div>
+    </center>
+    <script src="{{ url_for('static', filename='disco.js') }}"></script>= 
+  </body>
+</html>

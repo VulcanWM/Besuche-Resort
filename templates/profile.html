@@ -10,7 +10,10 @@
       <h2><a href="/">Home</a></h2>
       <h1>{{user['Username']}}</h1> 
       <p>Money: ₹{{user['Money']}}</p>
+      <p>Money in bank: ₹{{user['Bank']}}</p>
+      <p>Bank space: ₹{{user['Bank-Space']}}</p>
       <p>XP: {{user['XP']}}</p>
+      <p>Health: {{user['Health']}} </p>
       {% if user['Items'] == [] %}
         <p>{{user['Username']}} has no items!</p>
       {% else %}

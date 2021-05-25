@@ -29,7 +29,10 @@ def makeaccount(username, password):
     "Username": username,
     "Password": passhash,
     "Money": 5000,
+    "Bank": 100,
+    "Bank-Space": 100,
     "XP": 0,
+    "Health": 100,
     "Items": []
   }]
   profilescol.insert_many(document)
@@ -65,16 +68,18 @@ def buycafeitem(username, item):
   user = getuser(username)
   user2 = user
   money = user2['Money']
-  xp = user2['XP']
+  xp = user2['Health']
   itemstats = getitem(item, "cafe")
   if int(user['Money']) < int(itemstats['Cost']):
     return "You don't have enough money!"
   money = int(money) - itemstats['Cost']
   xp = int(xp) + itemstats['XP']
+  if xp > 99:
+    return "If you buy that you will have more than 100 Health and you can't have that!"
   del user2['Money']
-  del user2['XP']
+  del user2['Health']
   user2['Money'] = money
-  user2['XP'] = xp
+  user2['Health'] = xp
   profilescol.delete_one({"Username": username})
   profilescol.insert_many([user2])
   return True
@@ -83,16 +88,18 @@ def buyrestaurantitem(username, item):
   user = getuser(username)
   user2 = user
   money = user2['Money']
-  xp = user2['XP']
+  xp = user2['Health']
   itemstats = getitem(item, "restaurant")
   if int(user['Money']) < int(itemstats['Cost']):
     return "You don't have enough money!"
   money = int(money) - itemstats['Cost']
   xp = int(xp) + itemstats['XP']
+  if xp > 99:
+    return "If you buy that you will have more than 100 Health and you can't have that!"
   del user2['Money']
-  del user2['XP']
+  del user2['Health']
   user2['Money'] = money
-  user2['XP'] = xp
+  user2['Health'] = xp
   profilescol.delete_one({"Username": username})
   profilescol.insert_many([user2])
   return True
@@ -101,16 +108,18 @@ def buybaritem(username, item):
   user = getuser(username)
   user2 = user
   money = user2['Money']
-  xp = user2['XP']
+  xp = user2['Health']
   itemstats = getitem(item, "bar")
   if int(user['Money']) < int(itemstats['Cost']):
     return "You don't have enough money!"
   money = int(money) - itemstats['Cost']
   xp = int(xp) + itemstats['XP']
+  if xp > 99:
+    return "If you buy that you will have more than 100 Health and you can't have that!"
   del user2['Money']
-  del user2['XP']
+  del user2['Health']
   user2['Money'] = money
-  user2['XP'] = xp
+  user2['Health'] = xp
   profilescol.delete_one({"Username": username})
   profilescol.insert_many([user2])
   return True
