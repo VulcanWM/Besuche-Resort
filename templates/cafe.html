@@ -11,12 +11,12 @@
     <h1>Besuche Resort {{cap}}</h1>
     <h2>Menu</h2>
     {% for item in items %}
-        <h3>Item name: {{item['Item']}}</p>
-        <p>Price: {{item['Cost']}}</p>
-        <p>Amount of XP you gain: {{item['XP']}}</p>
-        <a href="/buy{{nocap}}item/{{item['Item']}}">Buy {{item['Item']}}</a>
-        <br>
-        <br>
+      <h3>Item name: {{item['Item']}}</p>
+      <p>Price: {{item['Cost']}}</p>
+      <p>Amount of XP you gain: {{item['XP']}}</p>
+      <a href="/buy{{nocap}}item/{{item['Item']}}">Buy {{item['Item']}}</a>
+      <br>
+      <br>
     {% endfor %}
     <script src="{{ url_for('static', filename='expand.js') }}"></script>
   </body>

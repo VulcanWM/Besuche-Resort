@@ -138,6 +138,13 @@ def disco():
   else:
     return render_template("disco.html")
 
+@app.route("/indoorpool")
+def indoorpool():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  else:
+    return render_template("indoorpool.html")
+
 # @app.route("/logout")
 # def logout():
 #   delcookie("User")
