@@ -2,6 +2,7 @@ import pymongo
 import dns
 import json
 import os
+import random
 from flask import session
 from werkzeug.security import generate_password_hash, check_password_hash
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
@@ -33,7 +34,7 @@ def makeaccount(username, password):
     "Bank-Space": 100,
     "XP": 0,
     "Health": 100,
-    "Items": []
+    "Items": {}
   }]
   profilescol.insert_many(document)
 def gethashpass(username):
@@ -123,3 +124,93 @@ def buybaritem(username, item):
   profilescol.delete_one({"Username": username})
   profilescol.insert_many([user2])
   return True
+
+def rolldice(username, number, bet):
+  bet = int(bet)
+  if int(bet) < 10:
+    return "You have to bet more than ₹10!"
+  if int(bet) > 10000:
+    return "You have to bet less than ₹10000!"
+  if float(getuser(username)['Money']) < float(bet):
+    return f"You don't have ₹{str(bet)}!"
+  dice = random.randint(1,6)
+  if int(dice) == int(number):
+    user = getuser(username)
+    user2 = user
+    money = user2['Money']
+    del user2['Money']
+    user2['Money'] = str(float(money) + float(bet * 6)) + "0"
+    delete = {"_id": user['_id']}
+    profilescol.delete_one(delete)
+    profilescol.insert_many([user2])
+    return f"The dice rolled {str(dice)}! You won ₹{str(int(bet) * 6)}!"
+  else:
+    user = getuser(username)
+    user2 = user
+    money = user2['Money']
+    del user2['Money']
+    user2['Money'] = str(float(money) - float(bet)) + "0"
+    delete = {"_id": user['_id']}
+    profilescol.delete_one(delete)
+    profilescol.insert_many([user2])
+    return f"The dice rolled {str(dice)}! You lost ₹{str(bet)}!"
+
+def flipcoin(username, side, bet):
+  bet = int(bet)
+  if int(bet) < 10:
+    return "You have to bet more than ₹10!"
+  if int(bet) > 2500:
+    return "You have to bet less than ₹2500!"
+  if float(getuser(username)['Money']) < float(bet):
+    return f"You don't have ₹{str(bet)}!"
+  coin = random.choice(['heads', 'tails'])
+  if side == coin:
+    user = getuser(username)
+    user2 = user
+    money = user2['Money']
+    del user2['Money']
+    user2['Money'] = str(float(money) + float(bet)) + "0"
+    delete = {"_id": user['_id']}
+    profilescol.delete_one(delete)
+    profilescol.insert_many([user2])
+    return f"The coin flipped {coin}! You won ₹{str(bet)}!"
+  else:
+    user = getuser(username)
+    user2 = user
+    money = user2['Money']
+    del user2['Money']
+    user2['Money'] = str(float(money) - float(bet)) + "0"
+    delete = {"_id": user['_id']}
+    profilescol.delete_one(delete)
+    profilescol.insert_many([user2])
+    return f"The coin flipped {str(coin)}! You lost ₹{str(bet)}!"
+
+def cupgame(username, number, bet):
+  bet = int(bet)
+  if int(bet) < 10:
+    return "You have to bet more than ₹10!"
+  if int(bet) > 5000:
+    return "You have to bet less than ₹5000!"
+  if float(getuser(username)['Money']) < float(bet):
+    return f"You don't have ₹{str(bet)}!"
+  cup = random.randint(1,3)
+  if int(number) == int(cup):
+    user = getuser(username)
+    user2 = user
+    money = user2['Money']
+    del user2['Money']
+    user2['Money'] = str(float(money) + float(bet * 3)) + "0"
+    delete = {"_id": user['_id']}
+    profilescol.delete_one(delete)
+    profilescol.insert_many([user2])
+    return f"The ball was in cup number {str(cup)}! You won ₹{str(int(bet) * 3)}!"
+  else:
+    user = getuser(username)
+    user2 = user
+    money = user2['Money']
+    del user2['Money']
+    user2['Money'] = str(float(money) - float(bet)) + "0"
+    delete = {"_id": user['_id']}
+    profilescol.delete_one(delete)
+    profilescol.insert_many([user2])
+    return f"The ball was in cup number {str(cup)}! You lost ₹{str(bet)}!"

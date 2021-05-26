@@ -1,0 +1,72 @@
+<html>
+  <body class="container">
+    <head>
+      <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
+      <link href="{{ url_for('static', filename='expand.css') }}" rel="stylesheet" type="text/css" />
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <center>
+      <h2><a href="/">Home</a></h2>
+      <title>Besuche Hotel Casino</title>
+      <h1 class="title">Besuche Hotel Casino</h1>
+    </center>
+    <div class="expandable section">
+      <h2>Roll Dice</h2>
+      <div class="expand">
+        <form action="{{ url_for('rollapp') }}" method="POST">
+          <label for="bet">Bet:</label><br>
+          <input type="number" id="bet" name="bet" required><br><br>
+          <label for="number">Number:</label><br>
+          <select id="number" name="number" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+          <br><br>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="expandable section">
+      <h2>Flip Coin</h2>
+      <div class="expand">
+        <form action="{{ url_for('flipapp') }}" method="POST">
+          <label for="bet">Bet:</label><br>
+          <input type="number" id="bet" name="bet" required><br><br>
+          <label for="side">Side:</label><br>
+          <select id="side" name="side" required>
+            <option value="heads">Heads</option>
+            <option value="tails">Tails</option>
+          </select>
+          <br><br>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="expandable section">
+      <h2>Cup Game</h2>
+      <div class="expand">
+        <form action="{{ url_for('cupapp') }}" method="POST">
+          <h3>Cup Game</h3>
+          <label for="bet">Bet:</label><br>
+          <input type="number" id="bet" name="bet" required><br><br>
+          <label for="number">Cup Number:</label><br>
+          <select id="number" name="number" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+          <br><br>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='expand.js') }}"></script>
+  </body>
+</html>

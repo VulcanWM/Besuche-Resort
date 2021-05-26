@@ -1,7 +1,13 @@
 from flask import Flask, render_template, request, redirect
+import pymongo
 import json
 import os
-from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, delcookie, buycafeitem, getitem, buyrestaurantitem, buybaritem
+mainclient = pymongo.MongoClient(os.getenv("clientm"))
+usersdb = mainclient.Users
+profilescol = usersdb.Users
+from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice
+# from functions import delcookie
+import random
 from werkzeug.security import check_password_hash
 app = Flask(__name__,
             static_url_path='', 
@@ -151,6 +157,86 @@ def cinema():
     return render_template("login.html")
   else:
     return render_template("cinema.html")
+
+@app.route("/casino")
+def casino():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  else:
+    return render_template("gambling.html")
+
+@app.route("/rolldice", methods=['POST', 'GET'])
+def rollapp():
+  if request.method == 'POST':
+    if getcookie("User") == False:
+      return render_template("login.html")
+    number = request.form['number']
+    bet = request.form['bet']
+    func = rolldice(getcookie("User"), number, bet)
+    if func.startswith("You "):
+      return render_template("error.html", error=func)
+    if "lost" in func:
+      return render_template("error.html", error=func)
+    if "won" in func:
+      return render_template("success.html", success=func)
+
+@app.route("/flipcoin", methods=['POST', 'GET'])
+def flipapp():
+  if request.method == "POST":
+    if getcookie("User") == False:
+      return render_template("login.html")
+    side = request.form['side']
+    bet = request.form['bet']
+    func = flipcoin(getcookie("User"), side, bet)
+    if func.startswith("You "):
+      return render_template("error.html", error=func)
+    if "lost" in func:
+      return render_template("error.html", error=func)
+    if "won" in func:
+      return render_template("success.html", success=func)
+
+@app.route("/cupgame", methods=['POST', 'GET'])
+def cupapp():
+  if request.method == "POST":
+    if getcookie("User") == False:
+      return render_template("login.html")
+    number = request.form['number']
+    bet = request.form['bet']
+    func = cupgame(getcookie("User"), number, bet)
+    if func.startswith("You "):
+      return render_template("error.html", error=func)
+    if "lost" in func:
+      return render_template("error.html", error=func)
+    if "won" in func:
+      return render_template("success.html", success=func)
+
+@app.route("/use<itemname>/<number>")
+def usebanknote(itemname, number):
+  if getcookie("User") == False:
+    return render_template("login.html")
+  user = getuser(getcookie("User"))
+  items = user['Items']
+  for item in items.keys():
+    if item.lower() == itemname.lower():
+      amount = items[item]
+      if int(number) > amount:
+        return render_template("error.html", error=f"You don't have {number} {item}s")
+      if item.lower() == "banknote":
+        increase = 0
+        for i in range(int(number)):
+          increase = int(increase) + random.randint(5000,10000)
+        bank = user['Bank-Space']
+        banknew = int(bank) + int(increase)
+        user2 = user
+        del user2['Bank-Space']
+        itemamount = int(amount) - int(number)
+        del user2['Items'][item]
+        user2['Items'][item] = int(itemamount)
+        user2['Bank-Space'] = banknew
+        delete = {"Username": getcookie("User")}
+        profilescol.delete_one(delete)
+        profilescol.insert_many([user])
+        return render_template("success.html", success=f"You used {number} banknote(s) and got {increase} more bank space!")
 
 # @app.route("/logout")
 # def logout():

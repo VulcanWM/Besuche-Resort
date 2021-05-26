@@ -5,6 +5,7 @@ Credits:
 - [`@JBloves27` on Replit](https://repl.it/@JBloves27) for helping me so many of my bugs
 - [`@okra` on Codepen](https://codepen.io/okra) for the disco ball code
 - [`@__akash__19` on Codepen](https://codepen.io/__akash__19) for the Indoor Swimming Pool code
+- [`@warrendunlop` on Codepen](https://codepen.io/warrendunlop) for the success page code
 - [`w3schools`](https://www.w3schools.com/) for the navbar code
 
 Thank you guys. I wouldn't have made this without all of this help.

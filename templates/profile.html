@@ -18,11 +18,11 @@
         <p>{{user['Username']}} has no items!</p>
       {% else %}
         <h3>Items</h3>
-          {% for itemidk in items  %}
-            {% for item, amount in itemidk.items() %}
+          {% for item in items.keys() %}
+            {% if items[item] != 0 %}
               <p>Item: {{item}}</p>
-              <p>Amount: {{amount}}</p>
-            {% endfor %}
+              <p>Amount: {{items[item]}}</p>
+            {% endif %}
           {% endfor %}
       {% endif %}
     </body>
