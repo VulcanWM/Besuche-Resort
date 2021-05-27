@@ -5,7 +5,7 @@ import os
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
 usersdb = mainclient.Users
 profilescol = usersdb.Users
-from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice
+from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp
 # from functions import delcookie
 import random
 from werkzeug.security import check_password_hash
@@ -57,6 +57,9 @@ def beach():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User"))['Health'] < 1:
+      return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
+    getxp(getcookie("User"))
     return render_template("beach.html")
 
 @app.route("/cafe")
@@ -135,6 +138,9 @@ def outdoorpool():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User"))['Health'] < 1:
+     return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
+    getxp(getcookie("User"))
     return render_template("outdoorpool.html")
   
 @app.route("/disco")
@@ -142,6 +148,9 @@ def disco():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User"))['Health'] < 1:
+      return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
+    getxp(getcookie("User"))
     return render_template("disco.html")
 
 @app.route("/indoorpool")
@@ -149,6 +158,9 @@ def indoorpool():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User"))['Health'] < 1:
+      return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
+    getxp(getcookie("User"))
     return render_template("indoorpool.html")
 
 @app.route("/cinema")
@@ -156,6 +168,9 @@ def cinema():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User"))['Health'] < 1:
+      return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
+    getxp(getcookie("User"))
     return render_template("cinema.html")
 
 @app.route("/casino")
@@ -163,6 +178,9 @@ def casino():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User"))['Health'] < 1:
+      return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
+    getxp(getcookie("User"))
     return render_template("gambling.html")
 
 @app.route("/rolldice", methods=['POST', 'GET'])
@@ -170,6 +188,9 @@ def rollapp():
   if request.method == 'POST':
     if getcookie("User") == False:
       return render_template("login.html")
+    if getuser(getcookie("User"))['Health'] < 1:
+      return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
+    getxp(getcookie("User"))
     number = request.form['number']
     bet = request.form['bet']
     func = rolldice(getcookie("User"), number, bet)
@@ -185,6 +206,9 @@ def flipapp():
   if request.method == "POST":
     if getcookie("User") == False:
       return render_template("login.html")
+    if getuser(getcookie("User"))['Health'] < 1:
+      return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
+    getxp(getcookie("User"))
     side = request.form['side']
     bet = request.form['bet']
     func = flipcoin(getcookie("User"), side, bet)
@@ -200,6 +224,9 @@ def cupapp():
   if request.method == "POST":
     if getcookie("User") == False:
       return render_template("login.html")
+    if getuser(getcookie("User"))['Health'] < 1:
+      return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
+    getxp(getcookie("User"))
     number = request.form['number']
     bet = request.form['bet']
     func = cupgame(getcookie("User"), number, bet)
@@ -214,6 +241,9 @@ def cupapp():
 def usebanknote(itemname, number):
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User"))['Health'] < 1:
+    return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
+  getxp(getcookie("User"))
   user = getuser(getcookie("User"))
   items = user['Items']
   for item in items.keys():

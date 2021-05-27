@@ -4,10 +4,13 @@ import json
 import os
 import random
 from flask import session
+import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
 usersdb = mainclient.Users
 profilescol = usersdb.Users
+cooldowndb = mainclient.Cooldown
+cooldowncol = cooldowndb.Cooldown
 
 def addcookie(key, value):
   session[key] = value
@@ -37,6 +40,7 @@ def makeaccount(username, password):
     "Items": {}
   }]
   profilescol.insert_many(document)
+
 def gethashpass(username):
   myquery = { "Username": username }
   mydoc = profilescol.find(myquery)
@@ -50,6 +54,68 @@ def getuser(username):
   for x in mydoc:
     return x
   return False
+
+def getusercddoc(username):
+  myquery = { "Username": username }
+  mydoc = cooldowncol.find(myquery)
+  for x in mydoc:
+    return x
+  return False
+
+def getusercd(username):
+  check = {}
+  myquery = { "Username": username }
+  mydoc = cooldowncol.find(myquery)
+  for x in mydoc:
+    check['hello'] = True
+    user = x
+  if "hello" not in check:
+    return False
+  cd = []
+  things = ["XP", "Daily"]
+  if user['XP'] == None:
+    cd.append("Ready")
+  else:
+    thetime = user['XP']
+    a = datetime.datetime(int(thetime.split()[0]), int(thetime.split()[1]), int(thetime.split()[2]), int(thetime.split()[3]), int(thetime.split()[4]), int(thetime.split()[5]))
+    current = datetime.datetime.utcnow()
+    year = str(current).split("-")[0]
+    month = str(current).split("-")[1]
+    daypart = str(current).split("-")[2]
+    day = str(daypart).split()[0]
+    something1 = str(current).split()[1]
+    something = something1.split(".")[0]
+    hour = something.split(":")[0]
+    minute = something.split(":")[1]
+    second = something.split(":")[2]
+    b = datetime.datetime(int(year),int(month),int(day),int(hour),int(minute),int(second))
+    seconds = (b-a).total_seconds()
+    if seconds > 60:
+      cd.append("Ready")
+    else:
+      cd.append(f"{str(600 - seconds)} seconds left")
+  if user['Daily'] == None:
+    cd.append("Ready")
+  else:
+    thetime = user['Daily']
+    a = datetime.datetime(int(thetime.split()[0]), int(thetime.split()[1]), int(thetime.split()[2]), int(thetime.split()[3]), int(thetime.split()[4]), int(thetime.split()[5]))
+    current = datetime.datetime.utcnow()
+    year = str(current).split("-")[0]
+    month = str(current).split("-")[1]
+    daypart = str(current).split("-")[2]
+    day = str(daypart).split()[0]
+    something1 = str(current).split()[1]
+    something = something1.split(".")[0]
+    hour = something.split(":")[0]
+    minute = something.split(":")[1]
+    second = something.split(":")[2]
+    b = datetime.datetime(int(year),int(month),int(day),int(hour),int(minute),int(second))
+    seconds = (b-a).total_seconds()
+    if seconds > 86400:
+      cd.append("Ready")
+    else:
+      cd.append(f"{str(84000 - seconds)} seconds left")
+  return cd
 
 def allusers():
   users = []
@@ -139,7 +205,7 @@ def rolldice(username, number, bet):
     user2 = user
     money = user2['Money']
     del user2['Money']
-    user2['Money'] = str(float(money) + float(bet * 6)) + "0"
+    user2['Money'] = int(money) + (int(bet) * 6)
     delete = {"_id": user['_id']}
     profilescol.delete_one(delete)
     profilescol.insert_many([user2])
@@ -149,7 +215,7 @@ def rolldice(username, number, bet):
     user2 = user
     money = user2['Money']
     del user2['Money']
-    user2['Money'] = str(float(money) - float(bet)) + "0"
+    user2['Money'] = int(money) - int(bet)
     delete = {"_id": user['_id']}
     profilescol.delete_one(delete)
     profilescol.insert_many([user2])
@@ -169,7 +235,7 @@ def flipcoin(username, side, bet):
     user2 = user
     money = user2['Money']
     del user2['Money']
-    user2['Money'] = str(float(money) + float(bet)) + "0"
+    user2['Money'] = int(float) + int(bet)
     delete = {"_id": user['_id']}
     profilescol.delete_one(delete)
     profilescol.insert_many([user2])
@@ -179,7 +245,7 @@ def flipcoin(username, side, bet):
     user2 = user
     money = user2['Money']
     del user2['Money']
-    user2['Money'] = str(float(money) - float(bet)) + "0"
+    user2['Money'] = int(money) - int(bet)
     delete = {"_id": user['_id']}
     profilescol.delete_one(delete)
     profilescol.insert_many([user2])
@@ -199,7 +265,7 @@ def cupgame(username, number, bet):
     user2 = user
     money = user2['Money']
     del user2['Money']
-    user2['Money'] = str(float(money) + float(bet * 3)) + "0"
+    user2['Money'] = int(money) + int(bet * 3)
     delete = {"_id": user['_id']}
     profilescol.delete_one(delete)
     profilescol.insert_many([user2])
@@ -209,8 +275,77 @@ def cupgame(username, number, bet):
     user2 = user
     money = user2['Money']
     del user2['Money']
-    user2['Money'] = str(float(money) - float(bet)) + "0"
+    user2['Money'] = int(money) - int(bet)
     delete = {"_id": user['_id']}
     profilescol.delete_one(delete)
     profilescol.insert_many([user2])
     return f"The ball was in cup number {str(cup)}! You lost ₹{str(bet)}!"
+
+def getxp(username):
+  usercd = getusercd(username)
+  if usercd == False:
+    user = getuser(username)
+    user2 = user
+    xp = user2['XP']
+    health = user2['Health']
+    increase = random.randint(1,5)
+    decrease = random.randint(1,5)
+    del user2['XP']
+    del user2['Health']
+    newxp = int(xp) + increase
+    newhealth = int(health) - decrease
+    user2['XP'] = newxp
+    user2['Health'] = newhealth
+    delete = {"Username": username}
+    profilescol.delete_one(delete)
+    profilescol.insert_many([user2])
+    current = datetime.datetime.utcnow()
+    year = str(current).split("-")[0]
+    month = str(current).split("-")[1]
+    daypart = str(current).split("-")[2]
+    day = str(daypart).split()[0]
+    something1 = str(current).split()[1]
+    something = something1.split(".")[0]
+    hour = something.split(":")[0]
+    minute = something.split(":")[1]
+    second = something.split(":")[2]
+    thetime = year + " " + month + " " + day + " " + hour + " " + minute + " " + second
+    user2 = {"Username": username,"XP": thetime, "Daily": None}
+    cooldowncol.insert_many([user2])
+    return True
+  if usercd[0] == "Ready":
+    user = getuser(username)
+    user2 = user
+    xp = user2['XP']
+    health = user2['Health']
+    increase = random.randint(1,5)
+    decrease = random.randint(1,5)
+    del user2['XP']
+    del user2['Health']
+    newxp = int(xp) + increase
+    newhealth = int(health) - decrease
+    user2['XP'] = newxp
+    user2['Health'] = newhealth
+    delete = {"Username": username}
+    profilescol.delete_one(delete)
+    profilescol.insert_many([user2])
+    current = datetime.datetime.utcnow()
+    year = str(current).split("-")[0]
+    month = str(current).split("-")[1]
+    daypart = str(current).split("-")[2]
+    day = str(daypart).split()[0]
+    something1 = str(current).split()[1]
+    something = something1.split(".")[0]
+    hour = something.split(":")[0]
+    minute = something.split(":")[1]
+    second = something.split(":")[2]
+    thetime = year + " " + month + " " + day + " " + hour + " " + minute + " " + second
+    user2 = getusercddoc(username)
+    del user2['XP']
+    user2['XP'] = thetime
+    delete = {"Username": username}
+    cooldowncol.delete_one(delete)
+    cooldowncol.insert_many([user2])
+    return True
+  else:
+    return False
