@@ -1,0 +1,28 @@
+<html>
+  <body>
+    <head>
+      <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    </head>
+    <center>
+      <title>Besuche Hotel Notifications</title>
+      <h2><a href="/">Home</a></h2>
+      {% if notifs != [] %}
+        <br>
+        <h3><a href="/clearnotifs">Clear All Your Notifications</a></h3>
+      {% endif %}
+      <h1>Your Notifications</h1>
+      {% if notifs == [] %}
+        <p>You don't have any notifications!</p>
+      {% endif %}
+      {% for notif in notifs %}
+        {% if notif['Seen'] == False %}
+          <p style="color: #FF6347">{{notif['Notification']}}</p>
+        {% else %}
+          <p style="color: #9ACD32">{{notif['Notification']}}</p>
+        {% endif %}
+      {% endfor %}
+    </center>
+  </body>
+</html>

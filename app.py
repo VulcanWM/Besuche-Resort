@@ -5,7 +5,7 @@ import os
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
 usersdb = mainclient.Users
 profilescol = usersdb.Users
-from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp
+from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen
 # from functions import delcookie
 import random
 from werkzeug.security import check_password_hash
@@ -267,6 +267,21 @@ def usebanknote(itemname, number):
         profilescol.delete_one(delete)
         profilescol.insert_many([user])
         return render_template("success.html", success=f"You used {number} banknote(s) and got {increase} more bank space!")
+
+@app.route("/notifs")
+def notifs():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  notifs = getnotifs(getcookie("User"))
+  allseen(getcookie("User"))
+  return render_template("notifs.html", notifs=notifs)
+
+@app.route("/clearnotifs")
+def clearnotifsapp():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  clearnotifs(getcookie("User"))
+  return redirect("/notifs")
 
 # @app.route("/logout")
 # def logout():

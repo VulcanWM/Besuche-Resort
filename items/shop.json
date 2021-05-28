@@ -1,0 +1,18 @@
+[
+  {
+    "Name": "padlock",
+    "Cost": 10000
+  },
+  {
+    "Name": "camera",
+    "Cost": 25000
+  },
+  {
+    "Name": "fakeid",
+    "Cost": 20000
+  },
+  {
+    "Name": "robberswishlist",
+    "Cost": 100000
+  }
+]

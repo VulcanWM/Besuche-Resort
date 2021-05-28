@@ -11,6 +11,8 @@ usersdb = mainclient.Users
 profilescol = usersdb.Users
 cooldowndb = mainclient.Cooldown
 cooldowncol = cooldowndb.Cooldown
+notifsdb = mainclient.Notifications
+notifscol = notifsdb.Notifications
 
 def addcookie(key, value):
   session[key] = value
@@ -349,3 +351,35 @@ def getxp(username):
     return True
   else:
     return False
+
+def getnotifs(username):
+  myquery = { "Username": username }
+  mydoc = notifscol.find(myquery)
+  notifs = []
+  for x in mydoc:
+    notifs.append(x)
+  return notifs
+
+def addnotif(username, notif):
+  notif = {"Username": username, "Notification": notif, "Seen": False}
+  notifscol.insert_many([notif])
+  return True
+
+def clearnotifs(username):
+  notifs = getnotifs(username)
+  for notif in notifs:
+    delete = {"_id": notif['_id']}
+    notifscol.delete_one(delete)
+  return True
+
+def allseen(username):
+  notifs = getnotifs(username)
+  # for notif in notifs:
+  #   notif2 = notif
+  #   del notif2['Seen']
+  #   notif2['Seen'] = True
+  #   delete = {""}
+  myquery = { "Username": username }
+  newvalues = { "$set": { "Seen": True } }
+  notifscol.update_many(myquery, newvalues)
+  return True
