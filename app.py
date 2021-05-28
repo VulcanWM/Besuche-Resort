@@ -300,6 +300,19 @@ def clearnotifsapp():
   clearnotifs(getcookie("User"))
   return redirect("/notifs")
 
+@app.route("/toddlersarea")
+def toddlersarea():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  else:
+    if getuser(getcookie("User"))['Health'] < 1:
+      return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
+    getxp(getcookie("User"))
+    spawn = spawnitem(getcookie("User"), "toddler's area")
+    if spawn != False:
+      return render_template("success.html", success=spawn)
+    return render_template("toddler.html")
+
 # @app.route("/logout")
 # def logout():
 #   delcookie("User")

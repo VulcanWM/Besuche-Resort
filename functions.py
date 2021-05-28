@@ -381,7 +381,6 @@ def allseen(username):
 
 def spawnitem(username, place):
   number = random.randint(1,1000)
-  print("Number: " + str(number))
   if number > 0 and number < 51:
     amount = random.randint(1,1000)
     user = getuser(username)

@@ -5,6 +5,7 @@ Credits:
 - [`@ch1ck3n` on Replit](https://repl.it/@ch1ck3n) for the login, signup and error page `css`
 - [`@SixBeeps` on Replit](https://repl.it/@SixBeeps) for recommending A-Frame and the Beach page code
 - [`@JBloves27` on Replit](https://repl.it/@JBloves27) for helping me so many of my bugs
+- [`HyperDev100` on Replit](https://repl.it/@HyperDev100) for the Toddler's Area code (they also got most of the code from GitHub)
 - [`@okra` on Codepen](https://codepen.io/okra) for the disco ball code
 - [`@__akash__19` on Codepen](https://codepen.io/__akash__19) for the Indoor Swimming Pool code
 - [`@warrendunlop` on Codepen](https://codepen.io/warrendunlop) for the success page code
