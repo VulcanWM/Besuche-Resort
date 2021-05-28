@@ -5,7 +5,7 @@ import os
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
 usersdb = mainclient.Users
 profilescol = usersdb.Users
-from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem
+from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem, useitem, getitemused
 # from functions import delcookie
 import random
 from werkzeug.security import check_password_hash
@@ -154,7 +154,8 @@ def profile():
     return render_template("login.html")
   user = getuser(getcookie("User"))
   items = user['Items']
-  return render_template("profile.html", user=user, items=items)
+  activeitems = getitemused(getcookie("User"))
+  return render_template("profile.html", user=user, items=items, activeitems=activeitems)
 
 @app.route("/outdoorpool")
 def outdoorpool():
@@ -275,8 +276,8 @@ def cupapp():
     if "won" in func:
       return render_template("success.html", success=func)
 
-@app.route("/use<itemname>/<number>")
-def usebanknote(itemname, number):
+@app.route("/use<itemname>")
+def useanitem(itemname):
   if getcookie("User") == False:
     return render_template("login.html")
   if getuser(getcookie("User"))['Health'] < 1:
@@ -286,24 +287,30 @@ def usebanknote(itemname, number):
   for item in items.keys():
     if item.lower() == itemname.lower():
       amount = items[item]
-      if int(number) > amount:
-        return render_template("error.html", error=f"You don't have {number} {item}s")
+      if 1 > amount:
+        return render_template("error.html", error=f"You don't have any {item}s")
       if item.lower() == "bank-note":
         increase = 0
-        for i in range(int(number)):
+        for i in range(int(1)):
           increase = int(increase) + random.randint(5000,10000)
         bank = user['Bank-Space']
         banknew = int(bank) + int(increase)
         user2 = user
         del user2['Bank-Space']
-        itemamount = int(amount) - int(number)
+        itemamount = int(amount) - int(1)
         del user2['Items'][item]
         user2['Items'][item] = int(itemamount)
         user2['Bank-Space'] = banknew
         delete = {"Username": getcookie("User")}
         profilescol.delete_one(delete)
         profilescol.insert_many([user])
-        return render_template("success.html", success=f"You used {number} banknote(s) and got {increase} more bank space!")
+        return render_template("success.html", success=f"You used 1 banknote and got {increase} more bank space!")
+      else:
+        func = useitem(getcookie("User"), itemname)
+        if func == True:
+          return render_template("success.html", success=f"You used an {item}!")
+        else:
+          return render_template("error.html", error=func)
 
 @app.route("/notifs")
 def notifs():

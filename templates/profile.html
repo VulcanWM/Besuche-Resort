@@ -22,8 +22,13 @@
             {% if items[item] != 0 %}
               <p>Item: {{item}}</p>
               <p>Amount: {{items[item]}}</p>
+              <a href="/use{{item}}">Use {{item}}</a>
             {% endif %}
           {% endfor %}
       {% endif %}
+      <h3>Active Items</h3>
+      {% for active in activeitems %}
+        <p>{{active}}: {{activeitems[active]}}</p>
+      {% endfor %}
     </body>
 </html>

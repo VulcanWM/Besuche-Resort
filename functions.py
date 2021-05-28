@@ -13,6 +13,7 @@ cooldowndb = mainclient.Cooldown
 cooldowncol = cooldowndb.Cooldown
 notifsdb = mainclient.Notifications
 notifscol = notifsdb.Notifications
+itemsdb = mainclient.Items
 
 def addcookie(key, value):
   session[key] = value
@@ -411,6 +412,8 @@ def spawnitem(username, place):
     return False
 
 def buyshopitem(username, item):
+  if item not in ['padlock', 'camera', 'fake-id', 'robbers-wishlist']:
+    return "This is not an item in the shop!"
   user = getuser(username)
   user2 = user
   money = user2['Money']
@@ -422,11 +425,56 @@ def buyshopitem(username, item):
     del user2['Items'][item]
     user2['Items'][item] = amount
   else:
-    amount = 0
+    amount = 1
     user2['Items'][item] = amount
   del user2['Money']
   user2['Money'] = int(money) - int(itemstats['Cost'])
   delete = {"Username": username}
   profilescol.delete_one(delete)
   profilescol.insert_many([user2])
+  return True
+
+def getitemused(username):
+  used = {"padlock": False, "camera": False, "fake-id": False, "robbers-wishlist": False}
+  padlockcol = itemsdb['padlock']
+  myquery = { "Username": username }
+  mydoc = padlockcol.find(myquery)
+  for x in mydoc:
+    del used['padlock']
+    used['padlock'] = True
+  cameracol = itemsdb['camera']
+  myquery = { "Username": username }
+  mydoc = cameracol.find(myquery)
+  for x in mydoc:
+    del used['camera']
+    used['camera'] = True
+  fakeidcol = itemsdb['fake-id']
+  myquery = { "Username": username }
+  mydoc = fakeidcol.find(myquery)
+  for x in mydoc:
+    del used['fake-id']
+    used['fake-id'] = True
+  wishlistcol = itemsdb['robbers-wishlist']
+  myquery = { "Username": username }
+  mydoc = wishlistcol.find(myquery)
+  for x in mydoc:
+    del used['robbers-wishlist']
+    used['robbers-wishlist'] = True
+  return used
+
+def useitem(username, item):
+  if item not in ['padlock', 'camera', 'fake-id', 'robbers-wishlist']:
+    return "This is not an item in the shop!"
+  user = getuser(username)
+  used = getitemused(username)
+  if used[item] != False:
+    return f"You already have an active {item}"
+  itemamount = user['Items'].get(item, 0)
+  if itemamount < 1:
+    return f"You don't have any {item}"
+  itemcol = itemsdb[item]
+  document = [{
+    "Username": username
+  }]
+  itemcol.insert_many(document)
   return True
