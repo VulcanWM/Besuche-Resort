@@ -5,7 +5,7 @@ import os
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
 usersdb = mainclient.Users
 profilescol = usersdb.Users
-from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen
+from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem
 # from functions import delcookie
 import random
 from werkzeug.security import check_password_hash
@@ -60,6 +60,9 @@ def beach():
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
+    spawn = spawnitem(getcookie("User"), "beach")
+    if spawn != False:
+      return render_template("success.html", success=spawn)
     return render_template("beach.html")
 
 @app.route("/cafe")
@@ -141,6 +144,9 @@ def outdoorpool():
     if getuser(getcookie("User"))['Health'] < 1:
      return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
+    spawn = spawnitem(getcookie("User"), "outdoor swimming pool")
+    if spawn != False:
+      return render_template("success.html", success=spawn)
     return render_template("outdoorpool.html")
   
 @app.route("/disco")
@@ -151,6 +157,9 @@ def disco():
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
+    spawn = spawnitem(getcookie("User"), "disco")
+    if spawn != False:
+      return render_template("success.html", success=spawn)
     return render_template("disco.html")
 
 @app.route("/indoorpool")
@@ -161,6 +170,9 @@ def indoorpool():
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
+    spawn = spawnitem(getcookie("User"), "indoor swimming pool")
+    if spawn != False:
+      return render_template("success.html", success=spawn)
     return render_template("indoorpool.html")
 
 @app.route("/cinema")
@@ -171,6 +183,9 @@ def cinema():
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
+    spawn = spawnitem(getcookie("User"), "cinema")
+    if spawn != False:
+      return render_template("success.html", success=spawn)
     return render_template("cinema.html")
 
 @app.route("/casino")
@@ -181,6 +196,9 @@ def casino():
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
+    spawn = spawnitem(getcookie("User"), "casino")
+    if spawn != False:
+      return render_template("success.html", success=spawn)
     return render_template("gambling.html")
 
 @app.route("/rolldice", methods=['POST', 'GET'])
@@ -243,7 +261,6 @@ def usebanknote(itemname, number):
     return render_template("login.html")
   if getuser(getcookie("User"))['Health'] < 1:
     return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
-  getxp(getcookie("User"))
   user = getuser(getcookie("User"))
   items = user['Items']
   for item in items.keys():
@@ -251,7 +268,7 @@ def usebanknote(itemname, number):
       amount = items[item]
       if int(number) > amount:
         return render_template("error.html", error=f"You don't have {number} {item}s")
-      if item.lower() == "banknote":
+      if item.lower() == "bank-note":
         increase = 0
         for i in range(int(number)):
           increase = int(increase) + random.randint(5000,10000)

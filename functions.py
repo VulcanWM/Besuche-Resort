@@ -374,12 +374,39 @@ def clearnotifs(username):
 
 def allseen(username):
   notifs = getnotifs(username)
-  # for notif in notifs:
-  #   notif2 = notif
-  #   del notif2['Seen']
-  #   notif2['Seen'] = True
-  #   delete = {""}
   myquery = { "Username": username }
   newvalues = { "$set": { "Seen": True } }
   notifscol.update_many(myquery, newvalues)
   return True
+
+def spawnitem(username, place):
+  number = random.randint(1,1000)
+  print("Number: " + str(number))
+  if number > 0 and number < 51:
+    amount = random.randint(1,1000)
+    user = getuser(username)
+    money = user['Money']
+    money = int(money) + amount
+    myquery = { "Username": username }
+    newvalues = { "$set": { "Money": money } }
+    profilescol.update_many(myquery, newvalues)
+    return f"You went to the {place} and somehow got yourself ₹{str(amount)}!"
+  elif number == 69:
+    user = getuser(username)
+    user2 = user
+    if "bank-note" in user['Items']:
+      amount = user['Items']['bank-note']
+      something = random.randint(1,5)
+      same = something
+      amount = int(amount) + something
+      del user2['Items']['bank-note']
+    else:
+      amount = random.randint(1,5)
+      same = amount
+    user2['Items']['bank-note'] = amount
+    delete = {"Username": username}
+    profilescol.delete_one(delete)
+    profilescol.insert_many([user2])
+    return f"You went to the {place} and somehow got yourself {same} bank notes!"
+  else:
+    return False
