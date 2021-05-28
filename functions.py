@@ -409,3 +409,24 @@ def spawnitem(username, place):
     return f"You went to the {place} and somehow got yourself {same} bank notes!"
   else:
     return False
+
+def buyshopitem(username, item):
+  user = getuser(username)
+  user2 = user
+  money = user2['Money']
+  itemstats = getitem(item, "shop")
+  if int(user['Money']) < int(itemstats['Cost']):
+    return "You don't have enough money!"
+  if item in user['Items']:
+    amount = user['Items'][item] + 1
+    del user2['Items'][item]
+    user2['Items'][item] = amount
+  else:
+    amount = 0
+    user2['Items'][item] = amount
+  del user2['Money']
+  user2['Money'] = int(money) - int(itemstats['Cost'])
+  delete = {"Username": username}
+  profilescol.delete_one(delete)
+  profilescol.insert_many([user2])
+  return True

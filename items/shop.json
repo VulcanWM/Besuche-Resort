@@ -1,18 +1,18 @@
 [
   {
-    "Name": "padlock",
+    "Item": "padlock",
     "Cost": 10000
   },
   {
-    "Name": "camera",
+    "Item": "camera",
     "Cost": 25000
   },
   {
-    "Name": "fake-id",
+    "Item": "fake-id",
     "Cost": 20000
   },
   {
-    "Name": "robbers-wishlist",
+    "Item": "robbers-wishlist",
     "Cost": 100000
   }
 ]

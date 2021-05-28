@@ -5,7 +5,7 @@ import os
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
 usersdb = mainclient.Users
 profilescol = usersdb.Users
-from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem
+from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem
 # from functions import delcookie
 import random
 from werkzeug.security import check_password_hash
@@ -125,6 +125,26 @@ def buybaritemfunc(item):
     money = str(getitem(item, "bar")['Cost'])
     xp = str(getitem(item, "bar")['XP'])
     return render_template("success.html", success=f"You bought {item} with ₹{money}, drank it and gained {xp} XP!")
+  else:
+    return render_template("error.html", error=func)
+
+@app.route("/shop")
+def shop():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  with open('items/shop.json') as json_file:
+    data = json.load(json_file)
+  json_file.close()
+  return render_template("cafe.html", items=data, cap="Shop", nocap="shop", noxp=True)
+
+@app.route("/buyshopitem/<item>")
+def buyshopitemfunc(item):
+  if getcookie("User") == False:
+    return render_template("login.html")
+  func = buyshopitem(getcookie("User"), item)
+  if func == True:
+    money = str(getitem(item, "shop")['Cost'])
+    return render_template("success.html", success=f"You bought {item} with ₹{money}!")
   else:
     return render_template("error.html", error=func)
 
