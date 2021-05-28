@@ -1,4 +1,4 @@
-[![Run on Repl.it](https://repl.it/badge/github/VulcanWM/Besuche-Resort)](https://repl.it/github/VulcanWM/Besuche-Resort)
+[![Run on Repl.it](https://repl.it/badge/github/VulcanWM/Besuche-Resort)](https://replit.com/@VulcanWM/Besuche-Resort)
 
 Credits:
 - [`@Nayoar` on Replit](https://repl.it/@Nayoar) for the `expand.js` and `expand.css` files
