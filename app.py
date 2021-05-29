@@ -5,7 +5,7 @@ import os
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
 usersdb = mainclient.Users
 profilescol = usersdb.Users
-from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem, useitem, getitemused
+from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem, useitem, getitemused, rob
 # from functions import delcookie
 import random
 from werkzeug.security import check_password_hash
@@ -339,6 +339,29 @@ def toddlersarea():
     if spawn != False:
       return render_template("success.html", success=spawn)
     return render_template("toddler.html")
+
+@app.route("/rob")
+def robapp():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  else:
+    return render_template("rob.html")
+
+@app.route("/rob", methods=['POST', 'GET'])
+def robfunc():
+  if request.method == 'POST':
+    username = request.form['username']
+    return redirect(f'/robfunc/{username}')
+
+@app.route("/robfunc/<username>")
+def robfuncapp(username):
+  if getcookie("User") == False:
+    return render_template("login.html")
+  func = rob(username, getcookie("User"))
+  if func.startswith("Yay") == True:
+    return render_template("success.html", success=func)
+  else:
+    return render_template("error.html", error=func)
 
 # @app.route("/logout")
 # def logout():

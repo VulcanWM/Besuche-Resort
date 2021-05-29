@@ -478,3 +478,100 @@ def useitem(username, item):
   }]
   itemcol.insert_many(document)
   return True
+
+def rob(username, enemy):
+  if getuser(username)['Money'] == 0:
+    return f"{username} doesn't have any money!"
+  if username.lower() == enemy.lower():
+    return "You cannot rob yourself!"
+  if getitemused(username)['camera'] == True:
+    number = random.randint(1,2)
+    if number == 1:
+      delete = {"Username": username}
+      camcol = itemsdb['camera']
+      camcol.delete_one(delete)
+      money = getuser(username)['Money']
+      enemymoney = getuser(enemy)['Money']
+      newmoney = money + enemymoney
+      myquery = { "Username": enemy }
+      newvalues = { "$set": { "Money": 0 } }
+      profilescol.update_many(myquery, newvalues)
+      myquery = { "Username": username }
+      newvalues = { "$set": { "Money": newmoney } }
+      profilescol.update_many(myquery, newvalues)
+      addnotif(username, f"{enemy} tried to steal from you but your camera saw what was happening and gave you all their money. Unfortunately, your camera broke!")
+      return f"You tried to rob {username} but they had a camera and saw what was happening, so you had to give all your money to them!"
+    else:
+      money = getuser(username)['Money']
+      enemymoney = getuser(enemy)['Money']
+      newmoney = money + enemymoney
+      myquery = { "Username": enemy }
+      newvalues = { "$set": { "Money": 0 } }
+      profilescol.update_many(myquery, newvalues)
+      myquery = { "Username": username }
+      newvalues = { "$set": { "Money": newmoney } }
+      profilescol.update_many(myquery, newvalues)
+      addnotif(username, f"{enemy} tried to steal from you but your camera saw what was happening and gave you all their money!")
+      return f"You tried to rob {username} but they had a camera and saw what was happening, so you had to give all your money to them!"
+  if getitemused(username)['padlock'] == True:
+    number = random.randint(1,5)
+    if number == 1:
+      delete = {"Username": username}
+      camcol = itemsdb['padlock']
+      camcol.delete_one(delete)
+      money = getuser(username)['Money']
+      enemymoney = getuser(enemy)['Money']
+      loss = random.randint(0, enemymoney)
+      newmoney = money + loss
+      enemymoneynew = enemymoney - loss
+      myquery = { "Username": enemy }
+      newvalues = { "$set": { "Money": enemymoneynew } }
+      profilescol.update_many(myquery, newvalues)
+      myquery = { "Username": username }
+      newvalues = { "$set": { "Money": newmoney } }
+      profilescol.update_many(myquery, newvalues)
+      addnotif(username, f"{enemy} tried to steal from you but your padlock protected you and they left ₹{str(loss)}! Unfortunately, your padlock broke.")
+      return f"You tried to rob {username} but they had a padlock so you had to give them ₹{str(loss)}!"
+    else:
+      money = getuser(username)['Money']
+      enemymoney = getuser(enemy)['Money']
+      loss = random.randint(0, enemymoney)
+      newmoney = money + loss
+      enemymoneynew = enemymoney - loss
+      myquery = { "Username": enemy }
+      newvalues = { "$set": { "Money": enemymoneynew } }
+      profilescol.update_many(myquery, newvalues)
+      myquery = { "Username": username }
+      newvalues = { "$set": { "Money": newmoney } }
+      profilescol.update_many(myquery, newvalues)
+      addnotif(username, f"{enemy} tried to steal from you but your padlock protected you and they left ₹{str(loss)}!")
+      return f"You tried to rob {username} but they had a padlock so you had to give them ₹{str(loss)}!"
+  number = random.randint(1,2)
+  if number == 1:
+    money = getuser(username)['Money']
+    enemymoney = getuser(enemy)['Money']
+    loss = random.randint(0, money)
+    newmoney = money - loss
+    enemymoneynew = enemymoney + loss
+    myquery = { "Username": enemy }
+    newvalues = { "$set": { "Money": enemymoneynew } }
+    profilescol.update_many(myquery, newvalues)
+    myquery = { "Username": username }
+    newvalues = { "$set": { "Money": newmoney } }
+    profilescol.update_many(myquery, newvalues)
+    addnotif(username, f"{enemy} stole ₹{str(loss)} from you!")
+    return f"Yay! You stole ₹{str(loss)} from {username}!"
+  else:
+    money = getuser(username)['Money']
+    enemymoney = getuser(enemy)['Money']
+    loss = random.randint(0, enemymoney)
+    newmoney = money + loss
+    enemymoneynew = enemymoney - loss
+    myquery = { "Username": enemy }
+    newvalues = { "$set": { "Money": enemymoneynew } }
+    profilescol.update_many(myquery, newvalues)
+    myquery = { "Username": username }
+    newvalues = { "$set": { "Money": newmoney } }
+    profilescol.update_many(myquery, newvalues)
+    addnotif(username, f"{enemy} tried to steal from you but someone saw them rob you so they left ₹{str(loss)}!")
+    return f"You tried to rob {username} but someone saw you so you had to give them ₹{str(loss)}!"

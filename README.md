@@ -1,5 +1,7 @@
 [![Run on Repl.it](https://repl.it/badge/github/VulcanWM/Besuche-Resort)](https://replit.com/@VulcanWM/Besuche-Resort)
 
+If you want another place in the resort, and have code of it, make an issue in [the GitHub repo](https://github.com/VulcanWM/Besuche-Resort/issues) with the code so I can check it out and add it to the resort. If you do, you will also be mentioned in the credits below.
+
 Credits:
 - [`@Nayoar` on Replit](https://repl.it/@Nayoar) for the `expand.js` and `expand.css` files
 - [`@ch1ck3n` on Replit](https://repl.it/@ch1ck3n) for the login, signup and error page `css`
