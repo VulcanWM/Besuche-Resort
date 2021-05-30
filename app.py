@@ -5,7 +5,8 @@ import os
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
 usersdb = mainclient.Users
 profilescol = usersdb.Users
-from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem, useitem, getitemused, rob, moneylb
+from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem, useitem, getitemused, rob, moneylb, banklb, bankspacelb
+from string import printable
 # from functions import delcookie
 import random
 from werkzeug.security import check_password_hash
@@ -28,12 +29,24 @@ def signup():
     if getcookie("User") != False:
       return render_template("error.html", error="You have already logged in!")
     username = request.form['username']
+    if len(username) > 25:
+      return render_template("error.html", error="Your username cannot have more than 25 letters!")
+    if len(username) < 2:
+      return render_template("error.html", error="You have to have more than 2 letters in your username!")
+    if set(username).difference(printable):
+      return render_template("error.html", error="Your username cannot contain any special characters!")
     if username.lower() in allusers():
       return render_template("error.html", error="A user already has this username! Try another one.")
     password = request.form['password']
     passworda = request.form['passwordagain']
     if password != passworda:
       return render_template("error.html", error="The two passwords don't match!")
+    if len(password) > 25:
+      return render_template("error.html", error="Your password cannot have more than 25 letters!")
+    if len(password) < 2:
+      return render_template("error.html", error="You have to have more than 2 letters in your password!")
+    if set(password).difference(printable):
+      return render_template("error.html", error="Your password cannot contain any special characters!")
     makeaccount(username, password)
     addcookie("User", username)
     return redirect("/")
@@ -368,7 +381,7 @@ def leaderboards():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
-    return render_template("leaderboard.html", users=moneylb())
+    return render_template("leaderboard.html", users=moneylb(getcookie("User")), bank=banklb(), bankspace=bankspacelb())
 
 @app.route("/rules")
 def rules():

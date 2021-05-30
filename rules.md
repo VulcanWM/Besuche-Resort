@@ -2,7 +2,7 @@
 
 - Rule 1: Do not make scripts to gain money or other in game things
   - This will result in an account deletion and ban
-- Rule 2: Do not use any swear words or innapropriat references in cabin names or any other things
+- Rule 2: Do not use any swear words or innapropriate references in cabin names or any other things
   - This will result in a warning first, then an account deletion the second time
 - Rule 3: Do not make any alt accounts to help get more money or other game stuff
   - This will result in all of your accounts getting deleted and a ban

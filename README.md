@@ -1,5 +1,7 @@
 [![Run on Repl.it](https://repl.it/badge/github/VulcanWM/Besuche-Resort)](https://replit.com/@VulcanWM/Besuche-Resort)
 
+Click on [here](https://Besuche-Resort.vulcanwm.repl.co/rules) for the rules. 
+
 If you want another place in the resort, and have code of it, make an issue in [the GitHub repo](https://github.com/VulcanWM/Besuche-Resort/issues) with the code so I can check it out and add it to the resort. If you do, you will also be mentioned in the credits below.
 
 Credits:

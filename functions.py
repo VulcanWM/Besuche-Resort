@@ -472,6 +472,13 @@ def useitem(username, item):
   itemamount = user['Items'].get(item, 0)
   if itemamount < 1:
     return f"You don't have any {item}"
+  itemamount = int(itemamount) - int(1)
+  user2 = user
+  del user2['Items'][item]
+  user2['Items'][item] = int(itemamount)
+  delete = {"Username": username}
+  profilescol.delete_one(delete)
+  profilescol.insert_many([user2])
   itemcol = itemsdb[item]
   document = [{
     "Username": username
@@ -576,8 +583,34 @@ def rob(username, enemy):
     addnotif(username, f"{enemy} tried to steal from you but someone saw them rob you so they left ₹{str(loss)}!")
     return f"You tried to rob {username} but someone saw you so you had to give them ₹{str(loss)}!"
 
-def moneylb():
+def moneylb(username):
   users = []
+  wishlist = getitemused(username)['robbers-wishlist']
+  rank = 0
   for user in profilescol.find().sort("Money", -1).limit(10):
+    if wishlist == False:
+      if getitemused(user['Username'])['fake-id'] !=  False:
+        del user['Username']
+        user['Username'] = "haha this user has a fake id"
+    rank = rank + 1
+    user['Rank'] = rank
+    users.append(user)
+  return users
+
+def banklb():
+  users = []
+  rank = 0
+  for user in profilescol.find().sort("Bank", -1).limit(10):
+    rank = rank + 1
+    user['Rank'] = rank
+    users.append(user)
+  return users
+
+def bankspacelb():
+  users = []
+  rank = 0
+  for user in profilescol.find().sort("Bank-Space", -1).limit(10):
+    rank = rank + 1
+    user['Rank'] = rank
     users.append(user)
   return users

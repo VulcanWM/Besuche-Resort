@@ -13,7 +13,27 @@
           <h2>Money Leaderboard</h2>
           <div class="expand">
             {% for user in users %}
-              <p>{{user['Username']}}: ₹{{user['Money']}}</p>
+              <p>{{user['Rank']}}) {{user['Username']}}: ₹{{user['Money']}}</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="auth">
+        <div class="expandable section auth-box">
+          <h2>Bank Leaderboard</h2>
+          <div class="expand">
+            {% for user in bank %}
+              <p>{{user['Rank']}}) {{user['Username']}}: ₹{{user['Money']}}</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="auth">
+        <div class="expandable section auth-box">
+          <h2>Bank Space Leaderboard</h2>
+          <div class="expand">
+            {% for user in bankspace %}
+              <p>{{user['Rank']}}) {{user['Username']}}: ₹{{user['Money']}}</p>
             {% endfor %}
           </div>
         </div>
