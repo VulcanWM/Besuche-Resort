@@ -1,0 +1,24 @@
+<html>
+  <body>
+    <link href="{{ url_for('static', filename='expand.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <center>
+      <title>Besuche Resort Commands - Leaderboard</title>
+      <h2><a href="/">Home</a></h2>
+
+      <div class="auth">
+        <div class="expandable section auth-box">
+          <h2>Money Leaderboard</h2>
+          <div class="expand">
+            {% for user in users %}
+              <p>{{user['Username']}}: ₹{{user['Money']}}</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </center>
+    <script src="{{ url_for('static', filename='expand.js') }}"></script>
+  </body>
+</html>

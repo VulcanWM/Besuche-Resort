@@ -5,7 +5,7 @@ import os
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
 usersdb = mainclient.Users
 profilescol = usersdb.Users
-from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem, useitem, getitemused, rob
+from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem, useitem, getitemused, rob, moneylb
 # from functions import delcookie
 import random
 from werkzeug.security import check_password_hash
@@ -362,6 +362,17 @@ def robfuncapp(username):
     return render_template("success.html", success=func)
   else:
     return render_template("error.html", error=func)
+
+@app.route("/leaderboards")
+def leaderboards():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  else:
+    return render_template("leaderboard.html", users=moneylb())
+
+@app.route("/rules")
+def rules():
+  return render_template("rules.html")
 
 # @app.route("/logout")
 # def logout():

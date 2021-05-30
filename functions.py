@@ -575,3 +575,9 @@ def rob(username, enemy):
     profilescol.update_many(myquery, newvalues)
     addnotif(username, f"{enemy} tried to steal from you but someone saw them rob you so they left ₹{str(loss)}!")
     return f"You tried to rob {username} but someone saw you so you had to give them ₹{str(loss)}!"
+
+def moneylb():
+  users = []
+  for user in profilescol.find().sort("Money", -1).limit(10):
+    users.append(user)
+  return users
