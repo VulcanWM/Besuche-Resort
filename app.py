@@ -5,7 +5,7 @@ import os
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
 usersdb = mainclient.Users
 profilescol = usersdb.Users
-from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem, useitem, getitemused, rob, moneylb, banklb, bankspacelb, dailyfunc
+from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem, useitem, getitemused, rob, moneylb, banklb, bankspacelb, dailyfunc, withdraw, deposit
 from string import printable
 # from functions import delcookie
 import random
@@ -396,6 +396,40 @@ def daily():
     return render_template("error.html", error=func)
   else:
     return render_template("success.html", success=func)
+
+@app.route("/withdraw")
+def withdrawapp():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  else:
+    return render_template("withdraw.html")
+
+@app.route("/withdraw", methods=['POST', 'GET'])
+def withdrawfunc():
+  if request.method == 'POST':
+    amount = int(request.form['amount'])
+    func = withdraw(getcookie("User"), amount)
+    if isinstance(func, int) == True:
+      return render_template("success.html", success=f"You withdrawed ₹{str(amount)} from your bank account!")
+    else:
+      return render_template("error.html", error=func)
+
+@app.route("/deposit")
+def depositapp():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  else:
+    return render_template("deposit.html")
+
+@app.route("/deposit", methods=['POST', 'GET'])
+def depositfunc():
+  if request.method == 'POST':
+    amount = int(request.form['amount'])
+    func = deposit(getcookie("User"), amount)
+    if isinstance(func, int) == True:
+      return render_template("success.html", success=f"You deposited ₹{str(amount)} from your bank account!")
+    else:
+      return render_template("error.html", error=func)
 
 # @app.route("/logout")
 # def logout():

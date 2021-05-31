@@ -655,3 +655,43 @@ def dailyfunc(username):
   cooldowncol.delete_one(delete)
   cooldowncol.insert_many([user2])
   return f"You claimed ₹{str(new)} for your daily! Come back in 24 hours to claim another one"
+
+def withdraw(username, amount):
+  if amount > getuser(username)['Bank']:
+    return f"You don't have ₹{str(amount)} in your bank!"
+  if amount < 1:
+    return "You have to withdraw at least ₹1!"
+  user = getuser(username)
+  money = user['Money']
+  bank = user['Bank']
+  banknew = int(bank) - int(amount)
+  moneynew = int(money) + int(amount)
+  del user['Money']
+  user['Money'] = moneynew
+  del user['Bank'] 
+  user['Bank'] = banknew
+  delete = {"Username": username}
+  profilescol.delete_one(delete)
+  profilescol.insert_many([user])
+  return int(amount)
+
+def deposit(username, amount):
+  if amount > getuser(username)['Money']:
+    return f"You don't have ₹{str(amount)} in your wallet!"
+  if amount < 1:
+    return "You have to deposit at least ₹1!"
+  user = getuser(username)
+  money = user['Money']
+  bank = user['Bank']
+  banknew = int(bank) + int(amount)
+  if banknew > user['Bank-Space']:
+    return f"You do not have enough bank space to deposit ₹{str(amount)}!"
+  moneynew = int(money) - int(amount)
+  del user['Money']
+  user['Money'] = moneynew
+  del user['Bank'] 
+  user['Bank'] = banknew
+  delete = {"Username": username}
+  profilescol.delete_one(delete)
+  profilescol.insert_many([user])
+  return int(amount)
