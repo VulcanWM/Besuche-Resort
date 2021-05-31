@@ -1,6 +1,12 @@
 [![Run on Repl.it](https://repl.it/badge/github/VulcanWM/Besuche-Resort)](https://replit.com/@VulcanWM/Besuche-Resort)
 
+Click on [here](https://Besuche-Resort.vulcanwm.repl.co/) to play
+
+Click on [here](https://github.com/VulcanWM/Besuche-Resort/wiki/Guide) for a guide on how to use the website.
+
 Click on [here](https://Besuche-Resort.vulcanwm.repl.co/rules) for the rules. 
+
+---
 
 If you want another place in the resort, and have code of it, make an issue in [the GitHub repo](https://github.com/VulcanWM/Besuche-Resort/issues) with the code so I can check it out and add it to the resort. If you do, you will also be mentioned in the credits below.
 
@@ -14,5 +20,7 @@ Credits:
 - [`@__akash__19` on Codepen](https://codepen.io/__akash__19) for the Indoor Swimming Pool code
 - [`@warrendunlop` on Codepen](https://codepen.io/warrendunlop) for the success page code
 - [`w3schools`](https://www.w3schools.com/) for the navbar code
+- [`@candies` on Replit](https://repl.it/@candies) for the help with the guide
+- [`Dank Memer`](https://dankmemer.lol/) for the inspiration and item names
 
 Thank you guys. I wouldn't have made this without all of this help.
