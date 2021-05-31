@@ -5,7 +5,7 @@ import os
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
 usersdb = mainclient.Users
 profilescol = usersdb.Users
-from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem, useitem, getitemused, rob, moneylb, banklb, bankspacelb
+from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem, useitem, getitemused, rob, moneylb, banklb, bankspacelb, dailyfunc
 from string import printable
 # from functions import delcookie
 import random
@@ -386,6 +386,16 @@ def leaderboards():
 @app.route("/rules")
 def rules():
   return render_template("rules.html")
+
+@app.route("/daily")
+def daily():
+  if getcookie("User") == False:
+    return render_template("login.html")
+  func = dailyfunc(getcookie("User"))
+  if func.startswith("Stop") == True:
+    return render_template("error.html", error=func)
+  else:
+    return render_template("success.html", success=func)
 
 # @app.route("/logout")
 # def logout():

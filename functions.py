@@ -40,7 +40,8 @@ def makeaccount(username, password):
     "Bank-Space": 100,
     "XP": 0,
     "Health": 100,
-    "Items": {}
+    "Items": {},
+    "Streak": 0
   }]
   profilescol.insert_many(document)
 
@@ -98,7 +99,7 @@ def getusercd(username):
     else:
       cd.append(f"{str(600 - seconds)} seconds left")
   if user['Daily'] == None:
-    cd.append("Ready")
+    cd.append(["Ready", None])
   else:
     thetime = user['Daily']
     a = datetime.datetime(int(thetime.split()[0]), int(thetime.split()[1]), int(thetime.split()[2]), int(thetime.split()[3]), int(thetime.split()[4]), int(thetime.split()[5]))
@@ -115,9 +116,9 @@ def getusercd(username):
     b = datetime.datetime(int(year),int(month),int(day),int(hour),int(minute),int(second))
     seconds = (b-a).total_seconds()
     if seconds > 86400:
-      cd.append("Ready")
+      cd.append(["Ready", str(seconds)])
     else:
-      cd.append(f"{str(84000 - seconds)} seconds left")
+      cd.append([f"{str(84000 - seconds)} seconds left"])
   return cd
 
 def allusers():
@@ -614,3 +615,43 @@ def bankspacelb():
     user['Rank'] = rank
     users.append(user)
   return users
+
+def dailyfunc(username):
+  usercd = getusercd(username)
+  if usercd[1][0] != "Ready":
+    return "Stop being greedy!"
+  user = getuser(username)
+  thestreak = user['Streak']
+  if usercd[1][1] == None or usercd[1][1] < 172800:
+    streak = user['Streak']
+    streak = streak + 1
+    user['Streak'] = streak
+  else:
+    del user['Streak']
+    user['Streak'] = 0
+  money = user['Money']
+  new = (thestreak + 1) * 500
+  newmoney = new + money
+  del user['Money']
+  user['Money'] = newmoney
+  delete = {"Username": username}
+  profilescol.delete_one(delete)
+  profilescol.insert_many([user])
+  current = datetime.datetime.utcnow()
+  year = str(current).split("-")[0]
+  month = str(current).split("-")[1]
+  daypart = str(current).split("-")[2]
+  day = str(daypart).split()[0]
+  something1 = str(current).split()[1]
+  something = something1.split(".")[0]
+  hour = something.split(":")[0]
+  minute = something.split(":")[1]
+  second = something.split(":")[2]
+  thetime = year + " " + month + " " + day + " " + hour + " " + minute + " " + second
+  user2 = getusercddoc(username)
+  del user2['Daily']
+  user2['Daily'] = thetime
+  delete = {"Username": username}
+  cooldowncol.delete_one(delete)
+  cooldowncol.insert_many([user2])
+  return f"You claimed ₹{str(new)} for your daily! Come back in 24 hours to claim another one"
