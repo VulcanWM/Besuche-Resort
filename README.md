@@ -2,13 +2,15 @@
 
 Click on [here](https://Besuche-Resort.vulcanwm.repl.co/) to play
 
-Click on [here](https://github.com/VulcanWM/Besuche-Resort/wiki/Guide) for a guide on how to use the website.
+Click on [here](https://Besuche-Resort.vulcanwm.repl.co/guide) for a guide on how to use the website.
 
 Click on [here](https://Besuche-Resort.vulcanwm.repl.co/rules) for the rules. 
 
 ---
 
-If you want another place in the resort, and have code of it, make an issue in [the GitHub repo](https://github.com/VulcanWM/Besuche-Resort/issues) with the code so I can check it out and add it to the resort. If you do, you will also be mentioned in the credits below.
+If you want another place in the resort, and have code of it, make an issue in [the GitHub repo](https://github.com/VulcanWM/Besuche-Resort/issues) with the code so I can check it out and add it to the resort. If you do, you will also be mentioned in the credits below. 
+
+If you have any ideas for the game, also make an issue in the GitHub repo above and I'll try to implement it as soon as possible
 
 Credits:
 - [`@Nayoar` on Replit](https://repl.it/@Nayoar) for the `expand.js` and `expand.css` files

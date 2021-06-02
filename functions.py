@@ -239,7 +239,7 @@ def flipcoin(username, side, bet):
     user2 = user
     money = user2['Money']
     del user2['Money']
-    user2['Money'] = int(float) + int(bet)
+    user2['Money'] = int(money) + int(bet)
     delete = {"_id": user['_id']}
     profilescol.delete_one(delete)
     profilescol.insert_many([user2])
@@ -488,6 +488,8 @@ def useitem(username, item):
   return True
 
 def rob(username, enemy):
+  if getuser(enemy)['Money'] < 200:
+    return "You have to have at least ₹200 to rob someone!"
   if getuser(username)['Money'] == 0:
     return f"{username} doesn't have any money!"
   if username.lower() == enemy.lower():

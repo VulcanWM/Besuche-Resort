@@ -431,6 +431,10 @@ def depositfunc():
     else:
       return render_template("error.html", error=func)
 
+@app.route("/guide")
+def guide():
+  return render_template("guide.html")
+
 # @app.route("/logout")
 # def logout():
 #   delcookie("User")
