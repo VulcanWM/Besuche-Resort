@@ -9,10 +9,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 mainclient = pymongo.MongoClient(os.getenv("clientm"))
 usersdb = mainclient.Users
 profilescol = usersdb.Users
-cooldowndb = mainclient.Cooldown
-cooldowncol = cooldowndb.Cooldown
-notifsdb = mainclient.Notifications
-notifscol = notifsdb.Notifications
+cooldowncol = usersdb.Cooldown
+notifscol = usersdb.Notifications
 itemsdb = mainclient.Items
 
 def addcookie(key, value):
@@ -56,7 +54,9 @@ def getuser(username):
   myquery = { "Username": username }
   mydoc = profilescol.find(myquery)
   for x in mydoc:
-    return x
+    if x.get("Deleted", None) == None:
+      return x
+    return False
   return False
 
 def getusercddoc(username):
@@ -697,3 +697,13 @@ def deposit(username, amount):
   profilescol.delete_one(delete)
   profilescol.insert_many([user])
   return int(amount)
+
+def settrade(type, username, giveamount, giveitem, recieveamount, recieveitem):
+  if type == True:
+    print("global trade")
+    # document = [{
+    #   "Username": username,
+
+    # }]
+  else:
+    print(f"trade to {type}")

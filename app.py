@@ -7,7 +7,7 @@ usersdb = mainclient.Users
 profilescol = usersdb.Users
 from functions import getcookie, allusers, makeaccount, addcookie, getuser, gethashpass, buycafeitem, getitem, buyrestaurantitem, buybaritem, cupgame, flipcoin, rolldice, getxp, getnotifs, clearnotifs, allseen, spawnitem, buyshopitem, useitem, getitemused, rob, moneylb, banklb, bankspacelb, dailyfunc, withdraw, deposit
 from string import printable
-# from functions import delcookie
+from functions import delcookie
 import random
 from werkzeug.security import check_password_hash
 app = Flask(__name__,
@@ -21,6 +21,9 @@ def home():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     return render_template("index.html")
 
 @app.route("/signup", methods=['POST', 'GET'])
@@ -70,6 +73,9 @@ def beach():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
@@ -82,6 +88,9 @@ def beach():
 def cafe():
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   with open('items/cafe.json') as json_file:
     data = json.load(json_file)
   json_file.close()
@@ -91,6 +100,9 @@ def cafe():
 def buycafeitemfunc(item):
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   func = buycafeitem(getcookie("User"), item)
   if func == True:
     money = str(getitem(item, "cafe")['Cost'])
@@ -103,6 +115,9 @@ def buycafeitemfunc(item):
 def restaurant():
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   with open('items/restaurant.json') as json_file:
     data = json.load(json_file)
   json_file.close()
@@ -112,6 +127,9 @@ def restaurant():
 def buyrestaurantitemfunc(item):
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   func = buyrestaurantitem(getcookie("User"), item)
   if func == True:
     money = str(getitem(item, "restaurant")['Cost'])
@@ -124,6 +142,9 @@ def buyrestaurantitemfunc(item):
 def bar():
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   with open('items/bar.json') as json_file:
     data = json.load(json_file)
   json_file.close()
@@ -133,6 +154,9 @@ def bar():
 def buybaritemfunc(item):
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   func = buybaritem(getcookie("User"), item)
   if func == True:
     money = str(getitem(item, "bar")['Cost'])
@@ -145,6 +169,9 @@ def buybaritemfunc(item):
 def shop():
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   with open('items/shop.json') as json_file:
     data = json.load(json_file)
   json_file.close()
@@ -154,6 +181,9 @@ def shop():
 def buyshopitemfunc(item):
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   func = buyshopitem(getcookie("User"), item)
   if func == True:
     money = str(getitem(item, "shop")['Cost'])
@@ -165,6 +195,9 @@ def buyshopitemfunc(item):
 def profile():
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   user = getuser(getcookie("User"))
   items = user['Items']
   activeitems = getitemused(getcookie("User"))
@@ -175,6 +208,9 @@ def outdoorpool():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     if getuser(getcookie("User"))['Health'] < 1:
      return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
@@ -188,6 +224,9 @@ def disco():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
@@ -201,6 +240,9 @@ def indoorpool():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
@@ -214,6 +256,9 @@ def cinema():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
@@ -227,6 +272,9 @@ def casino():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
@@ -240,6 +288,9 @@ def rollapp():
   if request.method == 'POST':
     if getcookie("User") == False:
       return render_template("login.html")
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
@@ -258,6 +309,9 @@ def flipapp():
   if request.method == "POST":
     if getcookie("User") == False:
       return render_template("login.html")
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
@@ -276,6 +330,9 @@ def cupapp():
   if request.method == "POST":
     if getcookie("User") == False:
       return render_template("login.html")
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
@@ -293,6 +350,9 @@ def cupapp():
 def useanitem(itemname):
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   if getuser(getcookie("User"))['Health'] < 1:
     return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
   user = getuser(getcookie("User"))
@@ -329,6 +389,9 @@ def useanitem(itemname):
 def notifs():
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   notifs = getnotifs(getcookie("User"))
   allseen(getcookie("User"))
   return render_template("notifs.html", notifs=notifs)
@@ -337,6 +400,9 @@ def notifs():
 def clearnotifsapp():
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   clearnotifs(getcookie("User"))
   return redirect("/notifs")
 
@@ -345,6 +411,9 @@ def toddlersarea():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     if getuser(getcookie("User"))['Health'] < 1:
       return render_template("error.html", error="You don't have any health! Go to the cafe, restauant or bar to get some.")
     getxp(getcookie("User"))
@@ -358,11 +427,19 @@ def robapp():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     return render_template("rob.html")
 
 @app.route("/rob", methods=['POST', 'GET'])
 def robfunc():
   if request.method == 'POST':
+    if getcookie("User") == False:
+      return render_template("login.html")
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     username = request.form['username']
     return redirect(f'/robfunc/{username}')
 
@@ -370,6 +447,9 @@ def robfunc():
 def robfuncapp(username):
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   func = rob(username, getcookie("User"))
   if func.startswith("Yay") == True:
     return render_template("success.html", success=func)
@@ -381,16 +461,25 @@ def leaderboards():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     return render_template("leaderboard.html", users=moneylb(getcookie("User")), bank=banklb(), bankspace=bankspacelb())
 
 @app.route("/rules")
 def rules():
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   return render_template("rules.html")
 
 @app.route("/daily")
 def daily():
   if getcookie("User") == False:
     return render_template("login.html")
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   func = dailyfunc(getcookie("User"))
   if func.startswith("Stop") == True:
     return render_template("error.html", error=func)
@@ -402,11 +491,19 @@ def withdrawapp():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     return render_template("withdraw.html")
 
 @app.route("/withdraw", methods=['POST', 'GET'])
 def withdrawfunc():
   if request.method == 'POST':
+    if getcookie("User") == False:
+      return render_template("login.html")
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     amount = int(request.form['amount'])
     func = withdraw(getcookie("User"), amount)
     if isinstance(func, int) == True:
@@ -419,11 +516,19 @@ def depositapp():
   if getcookie("User") == False:
     return render_template("login.html")
   else:
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     return render_template("deposit.html")
 
 @app.route("/deposit", methods=['POST', 'GET'])
 def depositfunc():
   if request.method == 'POST':
+    if getcookie("User") == False:
+      return render_template("login.html")
+    if getuser(getcookie("User")) == False:
+      delcookie("hello")
+      return redirect("/")
     amount = int(request.form['amount'])
     func = deposit(getcookie("User"), amount)
     if isinstance(func, int) == True:
@@ -433,6 +538,9 @@ def depositfunc():
 
 @app.route("/guide")
 def guide():
+  if getuser(getcookie("User")) == False:
+    delcookie("hello")
+    return redirect("/")
   return render_template("guide.html")
 
 # @app.route("/logout")
