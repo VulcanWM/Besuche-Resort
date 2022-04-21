@@ -1,10 +1,8 @@
-[![Run on Repl.it](https://repl.it/badge/github/VulcanWM/Besuche-Resort)](https://replit.com/@VulcanWM/Besuche-Resort)
+Click on [here](https://BesucheResort.vulcanwm.repl.co/) to play
 
-Click on [here](https://Besuche-Resort.vulcanwm.repl.co/) to play
+Click on [here](https://BesucheResort.vulcanwm.repl.co/guide) for a guide on how to use the website.
 
-Click on [here](https://Besuche-Resort.vulcanwm.repl.co/guide) for a guide on how to use the website.
-
-Click on [here](https://Besuche-Resort.vulcanwm.repl.co/rules) for the rules. 
+Click on [here](https://BesucheResort.vulcanwm.repl.co/rules) for the rules. 
 
 ---
 

@@ -624,7 +624,7 @@ def dailyfunc(username):
     return "Stop being greedy!"
   user = getuser(username)
   thestreak = user['Streak']
-  if usercd[1][1] == None or usercd[1][1] < 172800:
+  if usercd[1][1] == None or float(usercd[1][1]) < 172800:
     streak = user['Streak']
     streak = streak + 1
     user['Streak'] = streak

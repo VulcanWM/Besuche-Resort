@@ -13,10 +13,10 @@ Besuche Resort is a game where you are at a resort and see it as a great opportu
 **Let's get started!**
 
 ## Some main pages
-- [Home Page](https://Besuche-Resort.vulcanwm.repl.co/): here is where you can see the navigation bar where the links to all the pages are
-- [Profile Page](https://Besuche-Resort.vulcanwm.repl.co/profile): here you can see how much money you have in your wallet and bank, how much your bank space is (bank space is how much money you can have in your bank account), how much XP and health you have, how much your login streak is (if you collect your daily in more than a day and less than 2 days your login streak increases by 1, the more highers your login streak is the more money you get when you claim your dailies), which items you have, and what action items you have.
-- [Notifications Page](https://Besuche-Resort.vulcanwm.repl.co/notifs): you can check all your notifications there. If someone robs you or something, you will get a notification. If the notifications are red, you haven't seen it. If it is green, you have seen it.
-- [Rules Page](https://Besuche-Resort.vulcanwm.repl.co/rules): All of the rules for the game is here.
+- [Home Page](https://BesucheResort.vulcanwm.repl.co/): here is where you can see the navigation bar where the links to all the pages are
+- [Profile Page](https://BesucheResort.vulcanwm.repl.co/profile): here you can see how much money you have in your wallet and bank, how much your bank space is (bank space is how much money you can have in your bank account), how much XP and health you have, how much your login streak is (if you collect your daily in more than a day and less than 2 days your login streak increases by 1, the more highers your login streak is the more money you get when you claim your dailies), which items you have, and what action items you have.
+- [Notifications Page](https://BesucheResort.vulcanwm.repl.co/notifs): you can check all your notifications there. If someone robs you or something, you will get a notification. If the notifications are red, you haven't seen it. If it is green, you have seen it.
+- [Rules Page](https://BesucheResort.vulcanwm.repl.co/rules): All of the rules for the game is here.
 ----------------
 ## Three Dimensional Places
 
@@ -38,7 +38,7 @@ The places highlighted are either places you can earn xp and lost health from. T
    - **Toddler's Area**: Play with building blocks and make something imaginative!
 
 ## Commands
-[Rob](https://besuche-resort.vulcanwm.repl.co/rob), [Leaderboard](https://besuche-resort.vulcanwm.repl.co/leaderboards), [Daily](https://besuche-resort.vulcanwm.repl.co/daily), [Withdraw](https://besuche-resort.vulcanwm.repl.co/withdraw), [Deposit](https://besuche-resort.vulcanwm.repl.co/deposit)
+[Rob](https://besucheresort.vulcanwm.repl.co/rob), [Leaderboard](https://besucheresort.vulcanwm.repl.co/leaderboards), [Daily](https://besucheresort.vulcanwm.repl.co/daily), [Withdraw](https://besucheresort.vulcanwm.repl.co/withdraw), [Deposit](https://besucheresort.vulcanwm.repl.co/deposit)
 
 #### Rob
 - Rob is completed and it allows users or guests to rob other people that has money. 
@@ -74,4 +74,4 @@ The places highlighted are either places you can earn xp and lost health from. T
 
 ---
 
-# **Click [here](https://Besuche-Resort.vulcanwm.repl.co/) to play!**
+# **Click [here](https://BesucheResort.vulcanwm.repl.co/) to play!**
