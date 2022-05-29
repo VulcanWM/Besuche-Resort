@@ -24,3 +24,7 @@ Credits:
 - [`Dank Memer`](https://dankmemer.lol/) for the inspiration and item names
 
 Thank you guys. I wouldn't have made this without all of this help.
+
+---
+
+Made by [VulcanWM](https://vulcanwm.is-a.dev)
